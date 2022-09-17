@@ -1,0 +1,112 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["name", "source", "age", "city", "gender", "img", "medical", "particular", "pet_name", "phone",
+		"punch", "wx_code"
+	],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"issue_time": {
+			"bsonType": "timestamp",
+			"title": "发布时间"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"img": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"title": "图片",
+			"maxLength": 3
+		},
+		"pet_name": {
+			"bsonType": "string",
+			"title": "宠物昵称",
+			"maxLength": 5
+		},
+		"star": {
+			"bsonType": "string",
+			"title": "星球"
+		},
+		"variety": {
+			"bsonType": "string",
+			"title": "品种"
+		},
+		"gender": {
+			"bsonType": "string",
+			"title": "性别"
+		},
+		"age": {
+			"bsonType": "string",
+			"title": "年龄"
+		},
+		"medical": {
+			"bsonType": "array",
+			"title": "医疗",
+			"arrayType": "string"
+		},
+		"source": {
+			"bsonType": "array",
+			"title": "宠物来源",
+			"arrayType": "string"
+		},
+		"particular": {
+			"bsonType": "array",
+			"title": "宠物特点",
+			"arrayType": "string"
+		},
+		"story": {
+			"bsonType": "string",
+			"title": "宝贝故事",
+			"maxLength": 200
+		},
+		"request": {
+			"bsonType": "array",
+			"arrayType": "string",
+			"title": "领养要求"
+		},
+		"punch": {
+			"bsonType": "string",
+			"title": "送养成功后,要求领养人打卡"
+		},
+		"name": {
+			"bsonType": "string",
+			"title": "你的名字"
+		},
+		"city": {
+			"bsonType": "array",
+			"title": "城市",
+			"arrayType": "string"
+		},
+		"phone": {
+			"bsonType": "string",
+			"maxLength": 11,
+			"minLength": 11,
+			"title": "手机号"
+		},
+		"wx_code": {
+			"bsonType": "string",
+			"title": "微信号"
+		},
+		"video": {
+			"bsonType": "file",
+			"title": "视频"
+		},
+		"if_adopt": {
+			"bsonType": "bool",
+			"title": "是否被领养"
+		}
+	}
+}

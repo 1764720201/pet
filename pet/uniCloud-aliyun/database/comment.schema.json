@@ -1,0 +1,52 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["adopt_id", "comment", "user_id"],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"title": "发布时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"adopt_id": {
+			"bsonType": "string",
+			"foreignKey": "adoption._id"
+		},
+		"comment_type": {
+			"bsonType": "int"
+		},
+		"comment": {
+			"bsonType": "string"
+		},
+		"comment_id": {
+			"bsonType": "string",
+			"foreignKey": "comment._id"
+		},
+		"avatar_url": {
+			"bsonType": "string",
+			"title": "用户头像"
+		},
+		"nickname": {
+			"bsonType": "string",
+			"title": "用户名"
+		}
+	}
+}

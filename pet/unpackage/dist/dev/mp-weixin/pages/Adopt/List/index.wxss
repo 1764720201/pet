@@ -1,0 +1,95 @@
+.navigate.data-v-16c5d499 {
+  position: fixed;
+  bottom: 80rpx;
+  right: 50rpx;
+}
+.data-v-16c5d499 .uni-select {
+  border: none !important;
+}
+.choose.data-v-16c5d499 {
+  margin-top: 50rpx;
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+.choose .star-choose.data-v-16c5d499,
+.choose .gender-choose.data-v-16c5d499,
+.choose .age-choose.data-v-16c5d499 {
+  display: flex;
+}
+.petInfoList.data-v-16c5d499 {
+  width: 90%;
+  margin-left: 5%;
+}
+.petInfoList .petInfo.data-v-16c5d499 {
+  margin-top: 50rpx;
+  display: flex;
+}
+.petInfoList .petInfo .upload-picture.data-v-16c5d499 {
+  position: relative;
+}
+.petInfoList .petInfo .upload-picture .picture.data-v-16c5d499 {
+  width: 300rpx;
+  height: 270rpx;
+  border-radius: 20rpx;
+}
+.petInfoList .petInfo .upload-picture .wait-adopt.data-v-16c5d499 {
+  background-color: #ea7587;
+  position: absolute;
+  color: white;
+  font-size: 24rpx;
+  padding: 8rpx 10rpx;
+  border-radius: 20rpx 0rpx 13rpx 0rpx;
+}
+.petInfoList .petInfo .information.data-v-16c5d499 {
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.petInfoList .petInfo .information .pet-name.data-v-16c5d499 {
+  align-items: center;
+  display: flex;
+  font-weight: 900;
+}
+.petInfoList .petInfo .information .pet-name .gender.data-v-16c5d499 {
+  margin-left: 30rpx;
+  color: #ea7587;
+}
+.petInfoList .petInfo .information .variety.data-v-16c5d499 {
+  font-size: 26rpx;
+  color: #ccc;
+}
+.petInfoList .petInfo .information .medical.data-v-16c5d499 {
+  color: #f29db0;
+  font-size: 25rpx;
+  padding: 5rpx 15rpx;
+  border-radius: 10rpx;
+  background-color: rgba(242, 157, 176, 0.2);
+}
+.petInfoList .petInfo .information .medical.data-v-16c5d499:nth-child(2) {
+  margin-left: 8rpx;
+}
+.petInfoList .petInfo .information .medical.data-v-16c5d499:nth-child(3) {
+  margin-left: 8rpx;
+}
+.petInfoList .petInfo .information .city.data-v-16c5d499 {
+  font-size: 25rpx;
+  color: #666;
+  align-items: flex-end;
+}
+.petInfoList .petInfo .information .issue-time.data-v-16c5d499 {
+  display: flex;
+  width: 350rpx;
+  justify-content: flex-end;
+  color: #666;
+  font-size: 20rpx;
+}
+.data-v-16c5d499 .uni-select {
+  border: white;
+  border-bottom: white;
+}

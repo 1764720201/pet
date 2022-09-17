@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "寻宠列表",
+  "usingComponents": {
+    "list": "./List/index",
+    "search": "./Search/index"
+  }
+}

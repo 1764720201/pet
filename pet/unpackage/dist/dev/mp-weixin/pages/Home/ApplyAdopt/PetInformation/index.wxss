@@ -1,0 +1,90 @@
+.header.data-v-06ff5046 {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 0 0 40rpx;
+}
+.header .pet-name.data-v-06ff5046 {
+  font-size: 50rpx;
+  font-weight: 900;
+}
+.header .gender.data-v-06ff5046 {
+  font-size: 30rpx;
+  margin-left: 20rpx;
+  color: #ec579e;
+}
+.body.data-v-06ff5046 {
+  margin-top: 50rpx;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 5%;
+  width: 100%;
+  justify-content: space-between;
+}
+.body .option.data-v-06ff5046 {
+  margin-top: 30rpx;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+}
+.body .option .title.data-v-06ff5046 {
+  color: #666;
+  font-size: 23rpx;
+}
+.body .option .region.data-v-06ff5046 {
+  font-weight: 900;
+}
+.description.data-v-06ff5046 {
+  margin-top: 50rpx;
+  margin-left: 38rpx;
+}
+.description .title.data-v-06ff5046 {
+  font-weight: 900;
+}
+.description .story.data-v-06ff5046 {
+  margin-top: 40rpx;
+  font-size: 25rpx;
+}
+.request-list.data-v-06ff5046 {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30rpx;
+  margin-left: 20rpx;
+}
+.request-list .request.data-v-06ff5046 {
+  display: flex;
+  align-items: center;
+  margin-left: 15rpx;
+  color: #e07486;
+  font-size: 25rpx;
+}
+.request-list .request .true.data-v-06ff5046 {
+  text-align: center;
+  line-height: 24rpx;
+  width: 24rpx;
+  color: white;
+  height: 24rpx;
+  font-size: 16rpx;
+  margin-right: 10rpx;
+  border-radius: 12rpx;
+  background-color: #e07486;
+}
+.issue-time.data-v-06ff5046 {
+  color: #666;
+  font-size: 25rpx;
+  display: flex;
+  margin-left: 5%;
+  width: 90%;
+  margin-top: 20rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+.issue-time .poster.data-v-06ff5046 {
+  width: 150rpx;
+  height: 50rpx;
+  text-align: center;
+  line-height: 50rpx;
+  border-radius: 20rpx;
+  color: #e98696;
+  border: 1px solid #e98696;
+}

@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "tui-icon": "../../../node-modules/thorui-uni/lib/thorui/tui-icon/tui-icon",
+    "uni-dateformat": "../../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
+    "uni-load-more": "../../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more",
+    "unicloud-db": "../../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
+    "pick-regions": "../../../components/pick-regions/pick-regions"
+  }
+}

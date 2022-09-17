@@ -1,0 +1,9 @@
+
+.chooseAvatar {
+
+		display: inline-block;
+
+		border: dotted 1px #ddd;
+		border-radius: 10px;
+		text-align: center;
+}

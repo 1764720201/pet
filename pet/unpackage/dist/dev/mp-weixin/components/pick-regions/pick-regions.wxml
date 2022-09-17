@@ -1,0 +1,1 @@
+<picker mode="multiSelector" value="{{a}}" range="{{b}}" bindchange="{{c}}" bindcolumnchange="{{d}}"><slot></slot></picker>

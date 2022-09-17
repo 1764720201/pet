@@ -1,0 +1,1 @@
+<view class="inferior"><view class="message" bindtap="{{b}}"><uni-icons wx:if="{{a}}" u-i="5af8287a-0" bind:__l="__l" u-p="{{a}}"></uni-icons> 留言 </view><view class="online-consult">在线咨询</view><view class="apply-for">申请领养</view><view class="collect"><uni-icons wx:if="{{c}}" u-i="5af8287a-1" bind:__l="__l" u-p="{{c}}"></uni-icons> 收藏 </view></view>

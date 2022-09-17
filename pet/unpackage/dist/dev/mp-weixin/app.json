@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/Home/index",
+    "pages/Adopt/index",
+    "pages/FoundPet/index",
+    "pages/Issue/index",
+    "pages/Home/Enlightenment/index",
+    "pages/Message/index",
+    "pages/Home/ApplyAdopt/index",
+    "pages/Mine/index",
+    "pages/Issue/Adoption/index",
+    "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+    "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+    "uni_modules/uni-id-pages/pages/common/webview/webview",
+    "pages/Issue/FoundPet/index",
+    "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+    "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+    "pages/City/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/Home/index",
+        "text": "首页",
+        "iconPath": "static/images/tabBar/首页.png",
+        "selectedIconPath": "static/images/tabBar/首页选中.png"
+      },
+      {
+        "pagePath": "pages/Adopt/index",
+        "text": "领养",
+        "iconPath": "static/images/tabBar/领养.png",
+        "selectedIconPath": "static/images/tabBar/领养选中.png"
+      },
+      {
+        "pagePath": "pages/Issue/index",
+        "text": "发布",
+        "iconPath": "static/images/tabBar/发布.png",
+        "selectedIconPath": "static/images/tabBar/发布选中.png"
+      },
+      {
+        "pagePath": "pages/Message/index",
+        "text": "消息",
+        "iconPath": "static/images/tabBar/消息.png",
+        "selectedIconPath": "static/images/tabBar/消息选中.png"
+      },
+      {
+        "pagePath": "pages/Mine/index",
+        "text": "我的",
+        "iconPath": "static/images/tabBar/我的.png",
+        "selectedIconPath": "static/images/tabBar/我的选中.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将被获取"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "usingComponents": {}
+}

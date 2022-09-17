@@ -1,0 +1,155 @@
+{
+	"pages": [{
+			"path": "pages/Home/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/Adopt/index",
+			"style": {
+				"navigationBarTitleText": "领养"
+			}
+		},
+		{
+			"path": "pages/FoundPet/index",
+			"style": {
+				"navigationBarTitleText": "寻宠列表"
+			}
+		},
+		{
+			"path": "pages/Issue/index",
+			"style": {
+				"navigationBarTitleText": "发布"
+			}
+		},
+		{
+			"path": "pages/Home/Enlightenment/index",
+			"style": {
+				"navigationBarTitleText": "寻宠"
+			}
+		},
+
+		{
+			"path": "pages/Message/index",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		}, {
+			"path": "pages/Home/ApplyAdopt/index",
+			"style": {
+				"navigationBarTitleText": "等待领养"
+			}
+		},
+		{
+			"path": "pages/Mine/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/Issue/Adoption/index",
+			"style": {
+				"navigationBarTitleText": "发布送养"
+			}
+		},
+		{
+			"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+			"style": {
+				"navigationBarTitleText": "个人资料"
+			}
+		},
+
+		{
+			"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "uni_modules/uni-id-pages/pages/common/webview/webview",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/Issue/FoundPet/index",
+			"style": {
+				"navigationBarTitleText": "发布寻宠"
+			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+			"style": {
+				"navigationBarTitleText": "绑定手机号码"
+			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}, {
+			"path": "pages/City/index",
+			"style": {
+				"navigationBarTitleText": "选择城市"
+
+			}
+
+
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	// "uniIdRouter": {
+	// 	"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin",
+	// 	"needLogin": [
+	// 		"pages/Issue/Adoption/index",
+	// 		"pages/Issue/FoundPet/index",
+	// 		"pages/Mine/index",
+	// 		"pages/Message/index"
+	// 	],
+	// 	"resToLogin": true
+	// },
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
+		}
+	},
+	"tabBar": {
+		"borderStyle": "white",
+		"list": [{
+				"pagePath": "pages/Home/index",
+				"text": "首页",
+				"iconPath": "static/images/tabBar/首页.png",
+				"selectedIconPath": "static/images/tabBar/首页选中.png"
+			},
+			{
+				"pagePath": "pages/Adopt/index",
+				"text": "领养",
+				"iconPath": "static/images/tabBar/领养.png",
+				"selectedIconPath": "static/images/tabBar/领养选中.png"
+			},
+			{
+				"pagePath": "pages/Issue/index",
+				"text": "发布",
+				"iconPath": "static/images/tabBar/发布.png",
+				"selectedIconPath": "static/images/tabBar/发布选中.png"
+			},
+			{
+				"pagePath": "pages/Message/index",
+				"text": "消息",
+				"iconPath": "static/images/tabBar/消息.png",
+				"selectedIconPath": "static/images/tabBar/消息选中.png"
+			},
+			{
+				"pagePath": "pages/Mine/index",
+				"text": "我的",
+				"iconPath": "static/images/tabBar/我的.png",
+				"selectedIconPath": "static/images/tabBar/我的选中.png"
+			}
+		]
+	}
+}

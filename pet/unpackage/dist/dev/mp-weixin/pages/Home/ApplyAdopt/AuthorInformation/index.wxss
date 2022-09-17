@@ -1,0 +1,84 @@
+.author-information.data-v-036300de {
+  padding: 40rpx;
+  border-radius: 20rpx;
+  margin-top: 40rpx;
+  margin-left: 5%;
+  width: 80%;
+  height: 400rpx;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.author-information .title.data-v-036300de {
+  font-size: 35rpx;
+  font-weight: 900;
+}
+.author-information .main.data-v-036300de {
+  display: flex;
+}
+.author-information .main .avatar .img.data-v-036300de {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+}
+.author-information .main .information.data-v-036300de {
+  margin-left: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.author-information .main .information .name.data-v-036300de {
+  font-size: 40rpx;
+  font-weight: 900;
+}
+.author-information .main .information .adopt.data-v-036300de {
+  display: flex;
+  color: #666;
+  font-size: 22rpx;
+}
+.author-information .main .information .adopt .already.data-v-036300de {
+  margin-left: 20rpx;
+}
+.author-information .main .information .adopt .quantity.data-v-036300de {
+  color: #e0889b;
+}
+.author-information .main .information .authentication.data-v-036300de {
+  display: flex;
+  align-items: center;
+}
+.author-information .main .information .authentication .autonym.data-v-036300de {
+  padding: 3rpx 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 25rpx;
+  color: #666;
+  border: 1px solid #000;
+  border-radius: 10rpx;
+}
+.author-information .main .information .authentication .designation.data-v-036300de {
+  border-radius: 10rpx;
+  margin-left: 10rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  font-size: 23rpx;
+  padding: 3rpx 10rpx;
+  border: 1px solid #e0889b;
+  color: #e0889b;
+}
+.author-information .footer.data-v-036300de {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.author-information .footer .consult.data-v-036300de {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 40rpx;
+  width: 220rpx;
+  border-radius: 30rpx;
+  padding: 25rpx;
+  color: white;
+  background-image: linear-gradient(to right, #e79fb1, #ed7a8a);
+}
