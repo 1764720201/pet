@@ -1,9 +1,9 @@
 .request.data-v-130bcdcf {
   margin-top: 40rpx;
-  padding: 30rpx;
+  padding: 25rpx;
   margin-left: 5%;
   height: 100%;
-  width: 80%;
+  width: 81%;
   display: flex;
   flex-wrap: wrap;
   border-radius: 20rpx;
@@ -15,7 +15,6 @@
   flex-direction: column;
   height: 200rpx;
   justify-content: space-evenly;
-  margin-left: 20rpx;
   align-items: center;
 }
 .request .main .title.data-v-130bcdcf {

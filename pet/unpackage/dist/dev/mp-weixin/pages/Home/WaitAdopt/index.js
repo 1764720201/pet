@@ -11,6 +11,7 @@ if (!Math) {
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
+    const userId = common_vendor.pn.getCurrentUserInfo().uid;
     const db = common_vendor.pn.database();
     const petInfoList = common_vendor.ref([]);
     const goAdopt = () => {
@@ -18,12 +19,23 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/pages/Adopt/index"
       });
     };
-    db.collection("adoption").field("city,pet_name as petName,_id,img,issue_time").orderBy("issue_time", "desc").get().then((res) => {
-      petInfoList.value = res.result.data.slice(0, 8);
+    common_vendor.onShow(() => {
+      db.collection("adoption").where("if_adopt==false").field("city,pet_name as petName,_id,img,issue_time,if_adopt").orderBy("issue_time", "desc").limit(20).get().then((res) => {
+        petInfoList.value = res.result.data;
+      });
     });
     const goPetInfo = (petInfo) => {
       common_vendor.index.navigateTo({
-        url: `./ApplyAdopt/index?id=${petInfo._id}`
+        url: `/pages/ApplyAdopt/index?id=${petInfo._id}`,
+        success() {
+          common_vendor.pn.callFunction({
+            name: "footprint",
+            data: {
+              userId,
+              adoptId: petInfo._id
+            }
+          });
+        }
       });
     };
     return (_ctx, _cache) => {

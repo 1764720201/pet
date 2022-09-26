@@ -14,8 +14,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const foundList = common_vendor.ref([]);
     const db = common_vendor.pn.database();
     common_vendor.onLoad(() => {
-      db.collection("foundPet").field("user_id,_id,uploadPicture,city,title,avatar_url,nickname,create_time as createTime").orderBy("createTime", "desc").limit(2).get().then((res) => {
-        foundList.value = res.result.data.reverse();
+      db.collection("foundPet").where("state=='\u5DF2\u53D1\u5E03'").field("user_id,_id,uploadPicture,city,title,avatar_url,nickname,create_time as createTime,state").orderBy("createTime", "desc").limit(2).get().then((res) => {
+        foundList.value = res.result.data;
       }).catch((err) => {
         console.log(err.code);
         console.log(err.message);
@@ -26,9 +26,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/pages/FoundPet/index"
       });
     };
+    const userId = common_vendor.pn.getCurrentUserInfo().uid;
     const goFound = (petInfo) => {
       common_vendor.index.navigateTo({
-        url: `./Enlightenment/index?id=${petInfo._id}&user_id=${petInfo.user_id}`
+        url: `./Enlightenment/index?id=${petInfo._id}&user_id=${petInfo.user_id}`,
+        success() {
+          common_vendor.pn.callFunction({
+            name: "footprint",
+            data: {
+              userId,
+              foundId: petInfo._id
+            }
+          });
+        }
       });
     };
     return (_ctx, _cache) => {

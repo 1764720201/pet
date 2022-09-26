@@ -16,13 +16,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     db.collection("images").where('title=="\u5438\u732B\u7684\u65E5\u5E38"').get().then((res) => {
       image.value = res.result.data[0].image[0].path;
     });
+    const goCatDaily = () => {
+      common_vendor.index.navigateTo({
+        url: `/pages/Home/Daily/CatDaily/index?image=${image.value}`
+      });
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.p({
           size: 15,
           name: "arrowright"
         }),
-        b: image.value
+        b: image.value,
+        c: common_vendor.o(goCatDaily)
       };
     };
   }

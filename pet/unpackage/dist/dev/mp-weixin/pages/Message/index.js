@@ -13,6 +13,20 @@ const News = () => "./News/index.js";
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
+    const userInfo = common_vendor.reactive({
+      uid: 0
+    });
+    common_vendor.onShow(() => {
+      Object.assign(userInfo, common_vendor.pn.getCurrentUserInfo());
+    });
+    common_vendor.onLoad(() => {
+      Object.assign(userInfo, common_vendor.pn.getCurrentUserInfo());
+      if (userInfo.uid == 0) {
+        common_vendor.index.navigateTo({
+          url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
+        });
+      }
+    });
     const imageValue = common_vendor.ref([]);
     const upload = () => {
       common_vendor.pn.callFunction({

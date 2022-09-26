@@ -136,9 +136,19 @@ type Region={
 const handleGetRegion=(region:Region[])=>{
 	where.value=`city=='${region[2].name}'`
 }
+const userId=uniCloud.getCurrentUserInfo().uid
 const goEnlightenment = (foundId: number) => {
 	uni.navigateTo({
-		url: `/pages/Home/Enlightenment/index?id=${foundId}`
+		url: `/pages/Home/Enlightenment/index?id=${foundId}`,
+		success() {
+			uniCloud.callFunction({
+				name: 'footprint',
+				data: {
+					userId: userId,
+					foundId: foundId
+				}
+			});
+		}
 	});
 };
 

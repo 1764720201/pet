@@ -385,7 +385,7 @@ const getImageInfo = (src) => {
 function getImageSrc(src) {
   return new Promise(async (resolve) => {
     src = await uni_modules_sakuraCanvas_js_sdk_utils_util.base64ToPathFn(src);
-    if (src.includes("http") && !src.includes("resource")) {
+    if (src.includes("http")) {
       const downlaod = await uni_modules_sakuraCanvas_js_sdk_utils_util.downloadFile(src);
       if (!downlaod.success) {
         return resolve({

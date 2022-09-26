@@ -50,11 +50,13 @@ export default class DrawText {
 		Context.beginPath()
 		commonDrawMethods.setAlpha(alpha)
 		Context.font = font.style
+		// #ifdef MP-TOUTIAO
+		// 不知道为啥现在字节跳动一定用这个方法来设置文字大小了. 之前还不用...
 		if (!is2d) {
-			// #ifdef MP-TOUTIAO
-			// 不知道为啥现在字节跳动一定用这个方法来设置文字大小了. 之前还不用...
 			Context.setFontSize(font.fontSize)
-			// #endif
+		}
+		// #endif
+		if (!is2d) {
 			Context.setTextBaseline(baseline)
 		}else{
 			Context.textBaseline = baseline
@@ -136,7 +138,7 @@ export default class DrawText {
 	 * @returns 
 	 */
 	getFontStyle(fontStyle = {}, conversion = true) {
-		const { size, family, style, variant, weight } = {...this.commonUtilMethods.fontStyle, ...fontStyle}
+		const { size, family, style, variant, weight} = {...this.commonUtilMethods.fontStyle, ...fontStyle}
 		return {
 			fontSize: size,
 			fontSizeBefore: size,

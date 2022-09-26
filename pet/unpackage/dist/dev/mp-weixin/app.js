@@ -8,11 +8,28 @@ if (!Math) {
   "./pages/Home/index.js";
   "./pages/Adopt/index.js";
   "./pages/FoundPet/index.js";
+  "./pages/Home/Daily/CatDaily/index.js";
   "./pages/Issue/index.js";
+  "./pages/Home/Knowledge/PopularizationOfScience/index.js";
+  "./pages/Home/Knowledge/PopularizationOfScience/Encyclopedia/index.js";
+  "./pages/Home/Knowledge/PopularizationOfScience/Knowledge/index.js";
+  "./pages/Home/Knowledge/PopularizationOfScience/Encyclopedia/EncylopediaDetail/index.js";
   "./pages/Home/Enlightenment/index.js";
   "./pages/Message/index.js";
-  "./pages/Home/ApplyAdopt/index.js";
+  "./pages/Message/MyCollect/index.js";
+  "./pages/Message/MyComment/index.js";
+  "./pages/ApplyAdopt/index.js";
+  "./pages/ApplyAdopt/Apply/index.js";
+  "./pages/Mine/Request/Apply/ApplyDetail/index.js";
   "./pages/Mine/index.js";
+  "./pages/ApplyAdopt/UserInfo/index.js";
+  "./pages/Mine/PersonalInformation/Collect/index.js";
+  "./pages/Mine/PersonalInformation/Footprint/index.js";
+  "./pages/Mine/Request/Apply/index.js";
+  "./pages/Mine/Request/Issue/index.js";
+  "./pages/Mine/Request/Receive/index.js";
+  "./pages/Mine/Request/Found/index.js";
+  "./pages/Mine/Request/Receive/ProposerDetail/index.js";
   "./pages/Issue/Adoption/index.js";
   "./uni_modules/uni-id-pages/pages/userinfo/userinfo.js";
   "./uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage.js";
@@ -20,7 +37,7 @@ if (!Math) {
   "./pages/Issue/FoundPet/index.js";
   "./uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile.js";
   "./uni_modules/uni-id-pages/pages/login/login-withoutpwd.js";
-  "./pages/City/index.js";
+  "./components/city-select/City/index.js";
 }
 const _sfc_main = {
   onLaunch: async function() {

@@ -7,8 +7,8 @@
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null",
-		"update": true,
-		"delete": true
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
 	},
 	"properties": {
 		"_id": {
@@ -46,8 +46,9 @@
 			"bsonType": "string"
 		},
 		"phone": {
-			"title": "电话",
-			"bsonType": "string"
+			"bsonType": "string",
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"trim": "both"
 		},
 		"city": {
 			"bsonType": "array",
@@ -84,6 +85,9 @@
 		},
 		"nickname": {
 			"title": "用户名",
+			"bsonType": "string"
+		},
+		"state": {
 			"bsonType": "string"
 		}
 	}

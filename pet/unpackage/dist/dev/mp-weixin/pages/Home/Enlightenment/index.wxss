@@ -100,13 +100,17 @@
 .enlightenment .thread .detail.data-v-dd90f0c0 {
   width: 100%;
 }
-.enlightenment .thread .detail .introduce.data-v-dd90f0c0 {
+.enlightenment .thread .detail-header.data-v-dd90f0c0 {
+  justify-content: space-between;
+  display: flex;
+}
+.enlightenment .thread .detail-header .introduce.data-v-dd90f0c0 {
   display: flex;
   align-items: center;
   color: #666;
   margin-bottom: 20rpx;
 }
-.enlightenment .thread .detail .introduce.data-v-dd90f0c0::before {
+.enlightenment .thread .detail-header .introduce.data-v-dd90f0c0::before {
   content: '';
   display: block;
   width: 15rpx;
@@ -115,8 +119,73 @@
   border-radius: 50%;
   margin-right: 10rpx;
 }
+.enlightenment .pictureList.data-v-dd90f0c0 {
+  display: flex;
+  flex-direction: column;
+}
 .enlightenment .pictureList .picture.data-v-dd90f0c0 {
   margin-top: 20rpx;
   width: 100%;
   border-radius: 20rpx;
+}
+.enlightenment .comment.data-v-dd90f0c0 {
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 20rpx 0;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+.enlightenment .comment .content.data-v-dd90f0c0 {
+  color: #666;
+  border-radius: 30rpx;
+  padding: 5rpx;
+  padding-right: 200rpx;
+  background-color: #e2e2e2;
+  display: flex;
+  align-items: center;
+}
+.enlightenment .comment-list.data-v-dd90f0c0 {
+  padding-bottom: 200rpx;
+}
+.enlightenment .comment-list .comment-title.data-v-dd90f0c0 {
+  display: flex;
+  align-items: center;
+  color: #666;
+}
+.enlightenment .comment-list .comment-title.data-v-dd90f0c0::before {
+  content: '';
+  width: 15rpx;
+  height: 15rpx;
+  display: block;
+  border-radius: 50%;
+  background-color: orange;
+  margin-right: 10rpx;
+}
+.enlightenment .comment-list .comment-item.data-v-dd90f0c0 {
+  display: flex;
+  margin-top: 30rpx;
+}
+.enlightenment .comment-list .comment-item .comment-avatar.data-v-dd90f0c0 {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.enlightenment .comment-list .comment-item .time-name.data-v-dd90f0c0 {
+  margin-left: 30rpx;
+}
+.enlightenment .comment-list .comment-item .time-name .comment-name.data-v-dd90f0c0 {
+  font-size: 30rpx;
+  font-weight: 900;
+}
+.enlightenment .comment-list .comment-item .time-name .comment-time.data-v-dd90f0c0 {
+  color: #666;
+  font-size: 23rpx;
+}
+.enlightenment .comment-list .comment-item .time-name .comment-content.data-v-dd90f0c0 {
+  padding-top: 20rpx;
 }

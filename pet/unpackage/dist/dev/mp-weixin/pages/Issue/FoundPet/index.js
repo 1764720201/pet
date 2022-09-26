@@ -138,7 +138,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
               wxCode: formData.wxCode,
               reward: formData.reward,
               avatarURL: formData.avatarURL,
-              authorName: formData.authorName
+              authorName: formData.authorName,
+              state: "\u5DF2\u53D1\u5E03"
             },
             success() {
               common_vendor.index.showToast({

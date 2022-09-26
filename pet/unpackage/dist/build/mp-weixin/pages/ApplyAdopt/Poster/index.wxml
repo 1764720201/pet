@@ -1,0 +1,1 @@
+<view class="poster data-v-369f6678" bindtap="{{a}}">生成海报</view><block wx:if="{{r0}}"><canvas class="canvas data-v-369f6678" id="{{b}}" canvas-id="{{c}}" style="{{d}}"/></block><u-show-poster wx:if="{{f}}" class="data-v-369f6678" u-i="369f6678-0" bind:__l="__l" bindupdateModelValue="{{e}}" u-p="{{f}}"/>

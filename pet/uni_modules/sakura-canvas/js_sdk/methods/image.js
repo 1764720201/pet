@@ -398,7 +398,7 @@ export function getImageSrc(src) {
 	return new Promise(async resolve => {
 		src = await base64ToPathFn(src)
 		// #ifndef MP-TOUTIAO
-		if (src.includes('http') && !src.includes('resource')) {
+		if (src.includes('http')) {
 			const downlaod = await downloadFile(src)
 			if (!downlaod.success) {
 				return resolve({

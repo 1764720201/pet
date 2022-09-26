@@ -33,11 +33,8 @@ class DrawRect {
       gradient,
       offsetRight
     } = this.getDrawParams(params, conversion);
-    if (color === "black" && drawImage) {
-      color = "none";
-    } else if (color === "black") {
+    if (color === "black")
       color = "#ffffff";
-    }
     if (typeof r === "number") {
       if (r * 2 > h) {
         r = h / 2;
@@ -147,7 +144,7 @@ class DrawRect {
         const { type = "linear", relative, position, colors } = gradient;
         color = commonUtilMethods.getGradient(type, relative, commonUtilMethods.conversionUnit(position), colors, { x, y });
       }
-      if (!drawImage || drawImage && color !== "none") {
+      if (!drawImage) {
         commonDrawMethods.setFillStyle(color);
         Context.fill();
       }

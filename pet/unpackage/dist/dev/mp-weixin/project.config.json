@@ -6,19 +6,20 @@
     },
     "setting": {
         "urlCheck": false,
-        "es6": true,
-        "postcss": false,
-        "minified": false,
+        "es6": false,
+        "postcss": true,
+        "minified": true,
         "newFeature": true,
         "bigPackageSizeSupport": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
-        }
+        },
+        "uglifyFileName": false
     },
     "compileType": "miniprogram",
-    "libVersion": "2.25.4",
+    "libVersion": "2.26.0",
     "appid": "wxcafbef5692363c46",
     "projectname": "宠物",
     "condition": {},

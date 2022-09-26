@@ -207,14 +207,15 @@ class DrawPoster {
       this.$eventsMap.set(type, eventSet = /* @__PURE__ */ new Set());
     }
     eventSet.add(callback);
+    this.$eventsMap.set(type, eventSet);
   }
-  $emit(type = "", ...args) {
+  $emit(type = "", params = {}) {
     if (!type)
       return;
     const eventSet = this.$eventsMap.get(type);
     if (eventSet) {
       eventSet.forEach((event) => {
-        event.apply(this, args);
+        event(params);
       });
     }
   }
@@ -306,7 +307,7 @@ class DrawPoster {
       ey = y + size;
       w = size;
       h = size;
-    } else if (type === "image") {
+    } else if (type == "image") {
       if (windowAlign !== "none") {
         x = commonDrawMethods.computedCenterX(width, w, windowAlign, offsetRight);
       }

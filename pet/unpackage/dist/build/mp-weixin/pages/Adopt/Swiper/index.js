@@ -1,0 +1,1 @@
+"use strict";var e=require("../../../common/vendor.js");const t=e.defineComponent({__name:"index",setup(t){const a=e.ref([]);return e.pn.database().collection("images").where('title=="领养轮播图"').get().then((e=>{a.value=e.result.data[0].image})),(t,n)=>({a:e.f(a.value,((e,t,a)=>({a:e.path,b:t})))})}});var a=e._export_sfc(t,[["__scopeId","data-v-322178e2"]]);wx.createComponent(a);

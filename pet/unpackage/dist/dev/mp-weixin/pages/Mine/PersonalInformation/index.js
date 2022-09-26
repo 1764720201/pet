@@ -11,20 +11,28 @@ if (!Math) {
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
-    const userInfo = common_vendor.reactive({
-      uid: 0
-    });
+    const userId = common_vendor.pn.getCurrentUserInfo().uid;
+    const collectQuantity = common_vendor.ref();
+    const db = common_vendor.pn.database();
+    const footprintQuantity = common_vendor.ref();
     common_vendor.onShow(() => {
-      Object.assign(userInfo, common_vendor.pn.getCurrentUserInfo());
+      db.collection("collect").where(`user_id=='${userId}'`).get().then((res) => {
+        collectQuantity.value = res.result.data.length;
+      });
+      db.collection("footprint").where(`user_id=='${userId}'`).field("adopt_id,found_id").orderBy("create_time", "desc").distinct().get().then((res) => {
+        footprintQuantity.value = res.result.data.length;
+      });
     });
-    common_vendor.onLoad(() => {
-      Object.assign(userInfo, common_vendor.pn.getCurrentUserInfo());
-      if (!userInfo.uid) {
-        common_vendor.index.navigateTo({
-          url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
-        });
-      }
-    });
+    const goCollect = () => {
+      common_vendor.index.navigateTo({
+        url: "/pages/Mine/PersonalInformation/Collect/index"
+      });
+    };
+    const goFootPrint = () => {
+      common_vendor.index.navigateTo({
+        url: "/pages/Mine/PersonalInformation/Footprint/index"
+      });
+    };
     return (_ctx, _cache) => {
       return {
         a: common_vendor.w(({
@@ -42,11 +50,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           path: "a",
           vueId: "1751d24c-0"
         }),
-        b: common_vendor.p({
+        b: common_vendor.t(collectQuantity.value ? collectQuantity.value : 0),
+        c: common_vendor.o(goCollect),
+        d: common_vendor.t(footprintQuantity.value ? footprintQuantity.value : 0),
+        e: common_vendor.o(goFootPrint),
+        f: common_vendor.p({
           collection: "uni-id-users",
           field: "nickname,avatar_file",
           getone: true,
-          where: `_id == '${userInfo.uid}'`
+          where: `_id == '${common_vendor.unref(userId)}'`
         })
       };
     };

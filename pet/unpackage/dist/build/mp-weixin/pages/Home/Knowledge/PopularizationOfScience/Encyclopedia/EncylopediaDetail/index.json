@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "百科详情",
+  "usingComponents": {
+    "uni-icons": "../../../../../../uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "lgd-tab": "../../../../../../uni_modules/lgd-tab/components/lgd-tab/lgd-tab",
+    "pet-detail": "../../../../../../components/Tab/Encyclopedia/PetDetail"
+  }
+}

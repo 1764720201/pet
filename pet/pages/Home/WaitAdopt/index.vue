@@ -31,24 +31,39 @@
 	</view>
 </template>
 <script setup lang="ts">
+import { onShow } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+const userId = uniCloud.getCurrentUserInfo().uid;
 const db = uniCloud.database();
-const petInfoList = ref([]);
+const petInfoList = ref<any>([]);
 const goAdopt = () => {
 	uni.switchTab({
 		url: '/pages/Adopt/index'
 	});
 };
-db.collection('adoption')
-	.field('city,pet_name as petName,_id,img,issue_time')
-	.orderBy('issue_time', 'desc')
-	.get()
-	.then(res => {
-		petInfoList.value = res.result.data.slice(0, 8);
-	});
-const goPetInfo = petInfo => {
+onShow(() => {
+	db.collection('adoption')
+		.where('if_adopt==false')
+		.field('city,pet_name as petName,_id,img,issue_time,if_adopt')
+		.orderBy('issue_time', 'desc')
+		.limit(20)
+		.get()
+		.then(res => {
+			petInfoList.value = res.result.data;
+		});
+});
+const goPetInfo = (petInfo: { _id: string }) => {
 	uni.navigateTo({
-		url: `./ApplyAdopt/index?id=${petInfo._id}`
+		url: `/pages/ApplyAdopt/index?id=${petInfo._id}`,
+		success() {
+			uniCloud.callFunction({
+				name: 'footprint',
+				data: {
+					userId: userId,
+					adoptId: petInfo._id
+				}
+			});
+		}
 	});
 };
 </script>

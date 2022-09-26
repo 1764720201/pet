@@ -1,0 +1,1 @@
+<view class="encylopedia data-v-ea30d0b0"><view class="tabs data-v-ea30d0b0"><view wx:for="{{a}}" wx:for-item="category" wx:key="b" bindtap="{{category.c}}" class="{{['category', 'data-v-ea30d0b0', category.d && 'active']}}">{{category.a}}</view></view><encyclopedia wx:if="{{b}}" class="data-v-ea30d0b0" u-i="ea30d0b0-0" bind:__l="__l" u-p="{{b}}"></encyclopedia></view>

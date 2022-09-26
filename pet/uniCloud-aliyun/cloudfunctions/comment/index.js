@@ -10,7 +10,9 @@ exports.main = async (event, context) => {
 		user_id: event.userId,
 		adopt_id: event.adoptId,
 		nickname: event.nickname,
-		avatar_url: event.avatarUrl
+		avatar_url: event.avatarUrl,
+		comment_id: event.commentId,
+		found_id: event.foundId
 	})
 	return comment
 	//返回数据给客户端

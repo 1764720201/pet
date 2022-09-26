@@ -1,7 +1,7 @@
 {
   "id": "sakura-canvas",
   "displayName": "canvas绘制海报(分享图) ",
-  "version": "3.0.9",
+  "version": "3.0.8",
   "description": "支持JSON格式绘制海报。内置拥有许多的封装方法，便于你更快绘制",
   "keywords": [
     "uni_modules",
@@ -13,7 +13,11 @@
   "engines": {
     "HBuilderX": "^3.1.0"
   },
-"dcloudext": {
+  "dcloudext": {
+    "category": [
+        "JS SDK",
+        "通用 SDK"
+    ],
     "sale": {
       "regular": {
         "price": "0.00"
@@ -30,8 +34,7 @@
       "data": "无",
       "permissions": "无"
     },
-    "npmurl": "",
-    "type": "sdk-js"
+    "npmurl": ""
   },
   "uni_modules": {
     "dependencies": [],

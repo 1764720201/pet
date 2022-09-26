@@ -57,11 +57,6 @@ class DrawTriangle {
       borderColor,
       drawImage
     } = this.getDrawParams(params, conversion);
-    if (color === "black" && drawImage) {
-      color = "none";
-    } else if (color === "black") {
-      color = "#ffffff";
-    }
     if (windowAlign !== "none" && drawType != "custom") {
       x = commonDrawMethods.computedCenterX(canvasWidth, w, windowAlign, offsetRight);
     }
@@ -129,7 +124,7 @@ class DrawTriangle {
         commonDrawMethods.setStrokeStyle(borderColor);
         Context.stroke();
       }
-      if (!drawImage || drawImage && color !== "none") {
+      if (!drawImage) {
         commonDrawMethods.setFillStyle(color);
         Context.fill();
       }

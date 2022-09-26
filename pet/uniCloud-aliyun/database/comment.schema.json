@@ -1,7 +1,7 @@
 // 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
 {
 	"bsonType": "object",
-	"required": ["adopt_id", "comment", "user_id"],
+	"required": ["comment", "user_id"],
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null",
@@ -47,6 +47,10 @@
 		"nickname": {
 			"bsonType": "string",
 			"title": "用户名"
+		},
+		"found_id": {
+			"bsonType": "string",
+			"foreignKey": "foundPet._id"
 		}
 	}
 }

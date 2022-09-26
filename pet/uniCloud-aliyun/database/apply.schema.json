@@ -1,0 +1,78 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["adopt_id", "age", "city", "experience", "gender", "house", "income", "marriage", "phone", "present",
+		"user_id", "work", "wx_code", "state"
+	],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"adopt_id": {
+			"foreignKey": "adoption._id",
+			"bsonType": "string"
+		},
+		"age": {
+			"bsonType": "string"
+		},
+
+		"gender": {
+			"bsonType": "string"
+		},
+		"experience": {
+			"bsonType": "string"
+		},
+		"present": {
+			"bsonType": "string"
+		},
+		"house": {
+			"bsonType": "string"
+		},
+		"marriage": {
+			"bsonType": "string"
+		},
+		"income": {
+			"bsonType": "string"
+		},
+		"work": {
+			"bsonType": "string"
+		},
+		"city": {
+			"bsonType": "array",
+			"arrayType": "string"
+		},
+		"phone": {
+			"bsonType": "string",
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"trim": "both"
+		},
+		"wx_code": {
+			"bsonType": "string"
+		},
+		"sincerity": {
+			"bsonType": "string"
+		},
+		"state": {
+			"bsonType": "string"
+		}
+	}
+}

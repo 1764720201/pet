@@ -1,16 +1,18 @@
 <template>
-	<div class="wait-adopt-title">
-		<view class="title">
-			吸猫的日常
-			<view class="more">
-				查看更多
-				<tui-icon :size="15" name="arrowright"></tui-icon>
+	<view class="suck-cat" @click="goCatDaily">
+		<div class="wait-adopt-title">
+			<view class="title">
+				吸猫的日常
+				<view class="more">
+					查看更多
+					<tui-icon :size="15" name="arrowright"></tui-icon>
+				</view>
 			</view>
+		</div>
+		<view class="daily">
+			<img class="img" :src="image" />
+			<view class="title">吸猫的日常</view>
 		</view>
-	</div>
-	<view class="daily">
-		<img class="img" :src="image" />
-		<view class="title">吸猫的日常</view>
 	</view>
 </template>
 <script setup lang="ts">
@@ -23,6 +25,11 @@ db.collection('images')
 	.then(res => {
 		image.value = res.result.data[0].image[0].path;
 	});
+const goCatDaily = () => {
+	uni.navigateTo({
+		url: `/pages/Home/Daily/CatDaily/index?image=${image.value}`
+	});
+};
 </script>
 
 <style lang="less" scoped>

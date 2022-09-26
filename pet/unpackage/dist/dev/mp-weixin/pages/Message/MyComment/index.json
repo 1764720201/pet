@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我收到的评论",
+  "usingComponents": {
+    "uni-dateformat": "../../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
+    "uni-load-more": "../../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more",
+    "unicloud-db": "../../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db"
+  }
+}

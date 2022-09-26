@@ -58,11 +58,8 @@ class DrawArc {
       shadow,
       gradient
     } = this.getDrawParams(params, conversion);
-    if (color === "black" && drawImage) {
-      color = "none";
-    } else if (color === "black") {
+    if (color === "black")
       color = "#ffffff";
-    }
     if (shadow.show) {
       commonDrawMethods.setShadow(shadow.x, shadow.y, shadow.blur, shadow.color);
     }
@@ -89,7 +86,7 @@ class DrawArc {
         const { type, relative, position, colors } = gradient;
         color = commonUtilMethods.getGradient(type || "linear", relative, commonUtilMethods.conversionUnit(position), colors, { x, y });
       }
-      if (!drawImage || drawImage && color !== "none") {
+      if (!drawImage) {
         commonDrawMethods.setFillStyle(color);
         Context.fill();
       }

@@ -64,9 +64,19 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const handleGetRegion = (region) => {
       where.value = `city=='${region[2].name}'`;
     };
+    const userId = common_vendor.pn.getCurrentUserInfo().uid;
     const goEnlightenment = (foundId) => {
       common_vendor.index.navigateTo({
-        url: `/pages/Home/Enlightenment/index?id=${foundId}`
+        url: `/pages/Home/Enlightenment/index?id=${foundId}`,
+        success() {
+          common_vendor.pn.callFunction({
+            name: "footprint",
+            data: {
+              userId,
+              foundId
+            }
+          });
+        }
       });
     };
     const udb = common_vendor.ref(null);

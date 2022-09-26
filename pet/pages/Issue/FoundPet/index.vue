@@ -210,13 +210,12 @@ const rules = reactive({
 	}
 });
 const form = ref(null);
-const changeAddress = e => {
+const changeAddress = (e: any) => {
 	formData.city.push(e.detail.value[0].text);
 	formData.city.push(e.detail.value[1].text);
 	formData.city.push(e.detail.value[2].text);
 };
 const db = uniCloud.database();
-
 const confirmIssue = async () => {
 	await db
 		.collection('uni-id-users')
@@ -245,7 +244,8 @@ const confirmIssue = async () => {
 						wxCode: formData.wxCode,
 						reward: formData.reward,
 						avatarURL: formData.avatarURL,
-						authorName: formData.authorName
+						authorName: formData.authorName,
+						state: '已发布'
 					},
 					success() {
 						uni.showToast({

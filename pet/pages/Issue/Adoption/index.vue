@@ -539,9 +539,9 @@ const punchList = reactive<ChooseList[]>([
 	}
 ]);
 const changeAddress = (e: any) => {
-	e.detail.value.forEach((value: any) => {
-		formData.city.push(value.text);
-	});
+	formData.city.push(e.detail.value[0].text);
+	formData.city.push(e.detail.value[1].text);
+	formData.city.push(e.detail.value[2].text);
 };
 const changeAge = (e: any) => {
 	formData.age = e.detail.value[0].text;
@@ -583,13 +583,15 @@ const confirmIssue = () => {
 					phone: formData.phone,
 					wx_code: formData.wxCode,
 					video: formData.video,
-					ifAdopt: false,
-					issue_time: new Date().getTime()
+					ifAdopt: false
 				},
 				success() {
 					uni.showToast({
 						title: '发布成功'
 					});
+				},
+				fail(err) {
+					console.log(err);
 				}
 			});
 		})

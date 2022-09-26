@@ -372,9 +372,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
     ]);
     const changeAddress = (e) => {
-      e.detail.value.forEach((value) => {
-        formData.city.push(value.text);
-      });
+      formData.city.push(e.detail.value[0].text);
+      formData.city.push(e.detail.value[1].text);
+      formData.city.push(e.detail.value[2].text);
     };
     const changeAge = (e) => {
       formData.age = e.detail.value[0].text;
@@ -414,13 +414,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             phone: formData.phone,
             wx_code: formData.wxCode,
             video: formData.video,
-            ifAdopt: false,
-            issue_time: new Date().getTime()
+            ifAdopt: false
           },
           success() {
             common_vendor.index.showToast({
               title: "\u53D1\u5E03\u6210\u529F"
             });
+          },
+          fail(err) {
+            console.log(err);
           }
         });
       }).then(() => {

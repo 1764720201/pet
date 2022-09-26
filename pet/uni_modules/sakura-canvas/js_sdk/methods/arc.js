@@ -38,11 +38,7 @@ export default class DrawArc {
 			windowAlign, borderColor, borderWidth, offsetRight,
 			drawImage, shadow, gradient 
 		} = this.getDrawParams(params, conversion)
-		if (color === 'black' && drawImage) {
-			color = 'none'
-		} else if(color === 'black') {
-			color = '#ffffff'
-		}
+		if (color === 'black') color = '#ffffff'
 		if (shadow.show) {
 			// Context.save()
 			commonDrawMethods.setShadow(shadow.x, shadow.y, shadow.blur, shadow.color)
@@ -70,7 +66,7 @@ export default class DrawArc {
 				const { type, relative, position, colors } = gradient
 				color = commonUtilMethods.getGradient(type || 'linear', relative, commonUtilMethods.conversionUnit(position), colors, { x, y })
 			}
-			if (!drawImage || (drawImage && color !== 'none')) {
+			if (!drawImage) {
 				commonDrawMethods.setFillStyle(color)
 				Context.fill()
 			}

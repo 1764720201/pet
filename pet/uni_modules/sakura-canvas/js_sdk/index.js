@@ -38,7 +38,7 @@ export default class DrawPoster {
 		this._this = _this
 		// 绘制类型 default: 默认 2d: 2d绘制
 		this.type = type
-		// h5/APP无论设置什么都为default
+		// h5/APP无论设置上面都为default
 		// #ifdef H5 || APP-PLUS
 		this.type = 'default'
 		// #endif
@@ -239,18 +239,19 @@ export default class DrawPoster {
 			this.$eventsMap.set(type, (eventSet = new Set()))
 		}
 		eventSet.add(callback)
+		this.$eventsMap.set(type, eventSet)
 	}
 	/**
 	 * 触发用户传入的事件
 	 * @param { String } type 什么类型
-	 * @param { Array } args 其余参数
+	 * @param { Object } params 传递的参数
 	 */
-	$emit(type = '', ...args) {
+	$emit(type = '', params = {}) {
 		if (!type) return
 		const eventSet = this.$eventsMap.get(type)
 		if (eventSet) {
 			eventSet.forEach(event => {
-				event.apply(this, args)
+				event(params)
 			})
 		}
 	}
@@ -350,7 +351,7 @@ export default class DrawPoster {
 			ey = y + size
 			w = size
 			h = size
-		} else if (type === 'image') {
+		} else if (type == 'image') {
 			if (windowAlign !== 'none') {
 				x = commonDrawMethods.computedCenterX(width, w, windowAlign, offsetRight)
 			}

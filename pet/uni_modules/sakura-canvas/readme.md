@@ -93,7 +93,7 @@ import Draw from '@/uni_modules/sakura-canvas/js_sdk/index'
 | canvasId      | String   |                                   |          | 是       | canvas-id                                                    |
 | _this         | This     |                                   |          | 是       | 当前页面的this                                               |
 | background    | Object   | [DrawBackground](#drawBackground) |          | 是       | 画布的背景                                                   |
-| type          | String   |                                   | 2d       | 否       | 2d绘制(微信小程序，字节跳动小程序，支付宝小程序)       |
+| type          | String   |                                   | 2d       | 否       | 2d绘制(只在微信小程序上可使用)                               |
 | unit          | String   | px                                | px, rpx  |          | 画图时的单位                                                 |
 | fontStyle | Object | [Font](#font) |  | | 全局字体默认样式 |
 | exportImageStyle | Object | [ExportImageStyle](#exportImageStyle) |  | | 导出图片的样式 |
@@ -287,7 +287,7 @@ draw.$on('drawComplete', async result => {
 | h           | Number         | 0                     |                                                         | 是       | 高度                                                         |
 | src         | String         |                       |                                                         | 是       | 图片资源地址(网络路径, 本地路径, base64)<br />提示: 小程序需要配置网络路径的白名单 |
 | r           | Number \|Array | 0                     |                                                         |          | 圆角角度(当绘制类型为rect时圆角的大小, 和矩形一样可以设置不同圆角的大小) |
-| drawType    | String         | default               | 默认: default<br />矩形: rect<br />圆形: arc            |          | 图片绘制类型; <br />                                         |
+| drawType    | String         | default               | 默认: default<br />矩形: rect<br />圆形: arc            |          | 图片绘制类型; <br />提示: 绘制透明色的图片只有当类型为default时才行不然其余类型都会有背景色 |
 | mode        | String         | aspectFill            | aspectFill<br />aspectFit<br /> widthFix<br />heightFix |          | 图片模式                                                     |
 | alpha       | Number         | 1                     | 0~1                                                     |          | 透明度                                                       |
 | color       | String         | #000000               |                                                         |          | 背景颜色                                                     |

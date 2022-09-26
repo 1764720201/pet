@@ -30,19 +30,20 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
-const foundList = ref<[]>([]);
+const foundList = ref<any>([]);
 const db = uniCloud.database();
 
 onLoad(() => {
 	db.collection('foundPet')
+		.where("state=='已发布'")
 		.field(
-			'user_id,_id,uploadPicture,city,title,avatar_url,nickname,create_time as createTime'
+			'user_id,_id,uploadPicture,city,title,avatar_url,nickname,create_time as createTime,state'
 		)
 		.orderBy('createTime', 'desc')
 		.limit(2)
 		.get()
 		.then((res: any) => {
-			foundList.value = res.result.data.reverse();
+			foundList.value = res.result.data;
 		})
 		.catch(err => {
 			console.log(err.code); // 打印错误码
@@ -54,11 +55,21 @@ const goFoundPet = () => {
 		url: '/pages/FoundPet/index'
 	});
 };
+const userId = uniCloud.getCurrentUserInfo().uid;
 const goFound = petInfo => {
 	uni.navigateTo({
 		url: `./Enlightenment/index?id=${petInfo._id}&user_id=${
 			petInfo.user_id
-		}`
+		}`,
+		success() {
+			uniCloud.callFunction({
+				name: 'footprint',
+				data: {
+					userId: userId,
+					foundId: petInfo._id
+				}
+			});
+		}
 	});
 };
 </script>

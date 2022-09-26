@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我发布的领养",
+  "usingComponents": {
+    "lgd-tab": "../../../../uni_modules/lgd-tab/components/lgd-tab/lgd-tab",
+    "adopt": "../../../../components/Tab/Issue/index"
+  }
+}

@@ -18,7 +18,8 @@ exports.main = async (event, context) => {
 		reward: event.reward,
 		avatar_url: event.avatarURL,
 		type: event.type,
-		nickname: event.authorName
+		nickname: event.authorName,
+		state: event.state
 	})
 	return foundPet
 	//返回数据给客户端

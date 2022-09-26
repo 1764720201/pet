@@ -1,0 +1,22 @@
+.adopt.data-v-a8fe5390 {
+  display: flex;
+  padding: 30rpx;
+  border-bottom: 1px solid #ccc;
+}
+.adopt .adopt-image.data-v-a8fe5390 {
+  width: 120rpx;
+  height: 120rpx;
+}
+.adopt .pet.data-v-a8fe5390 {
+  margin-left: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.adopt .pet .pet-variety.data-v-a8fe5390 {
+  font-size: 26rpx;
+  color: #666;
+}
+.adopt.data-v-a8fe5390:first-child {
+  border-top: 1px solid #ccc;
+}

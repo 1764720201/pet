@@ -7,8 +7,8 @@
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null",
-		"update": true,
-		"delete": true
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
 	},
 	"properties": {
 		"_id": {
@@ -16,7 +16,9 @@
 		},
 		"issue_time": {
 			"bsonType": "timestamp",
-			"title": "发布时间"
+			"defaultValue": {
+				"$env": "now"
+			}
 		},
 		"user_id": {
 			"bsonType": "string",
@@ -92,9 +94,8 @@
 		},
 		"phone": {
 			"bsonType": "string",
-			"maxLength": 11,
-			"minLength": 11,
-			"title": "手机号"
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"trim": "both"
 		},
 		"wx_code": {
 			"bsonType": "string",

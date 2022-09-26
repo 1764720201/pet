@@ -259,7 +259,31 @@ const base64ToPathFn = (path) => {
   }
   return uni_modules_sakuraCanvas_js_sdk_plugins_imageTools.base64ToPath(path);
 };
+const saveImageToPhotosAlbum = (filePath) => {
+  return new Promise((resolve) => {
+    common_vendor.index.showLoading({ title: "\u4FDD\u5B58\u4E2D..." });
+    common_vendor.index.saveImageToPhotosAlbum({
+      filePath,
+      success: (res) => {
+        resolve({
+          success: true,
+          data: res.file
+        });
+      },
+      fail: (err) => {
+        resolve({
+          success: false,
+          message: err
+        });
+      },
+      complete: () => {
+        common_vendor.index.hideLoading();
+      }
+    });
+  });
+};
 exports.base64ToPathFn = base64ToPathFn;
 exports.conversionUnit = conversionUnit;
 exports.countTextLength = countTextLength;
 exports.downloadFile = downloadFile;
+exports.saveImageToPhotosAlbum = saveImageToPhotosAlbum;

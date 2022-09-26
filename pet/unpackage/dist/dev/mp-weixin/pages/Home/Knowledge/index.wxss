@@ -1,8 +1,21 @@
+.swiper.data-v-6d33d24a {
+  font-size: 30rpx;
+  line-height: 50rpx;
+  width: 700rpx;
+  height: 50rpx;
+}
+.swiper-item.data-v-6d33d24a {
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+}
 .today-knowledge.data-v-6d33d24a {
+  display: flex;
   padding: 40rpx;
   font-size: 25rpx;
 }
 .today-knowledge .today.data-v-6d33d24a {
+  width: 40%;
   display: flex;
   align-items: center;
   font-weight: 900;

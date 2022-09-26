@@ -1,0 +1,50 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["user_id", "type"],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null",
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"type": {
+			"bsonType": "int",
+			"description": "0表示领养,1表示寻宠,2表示科普,3表示百科"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"title": "收藏时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"adopt_id": {
+			"bsonType": "string",
+			"foreignKey": "adoption._id"
+		},
+		"pet_id": {
+			"bsonType": "string",
+			"foreignKey": "pet._id"
+		},
+		"found_id": {
+			"bsonType": "string",
+			"foreignKey": "foundPet._id"
+		},
+		"knowledge_id": {
+			"bsonType": "string",
+			"foreignKey": "petKnowledge._id"
+		}
+	}
+}

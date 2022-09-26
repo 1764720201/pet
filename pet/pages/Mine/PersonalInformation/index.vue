@@ -5,7 +5,7 @@
 			collection="uni-id-users"
 			field="nickname,avatar_file"
 			:getone="true"
-			:where="`_id == '${userInfo.uid}'`"
+			:where="`_id == '${userId}'`"
 		>
 			<view class="personal-information">
 				<view class="person">
@@ -22,13 +22,17 @@
 				</view>
 			</view>
 			<view class="footer">
-				<view class="collect">
+				<view class="collect" @click="goCollect">
 					收藏
-					<span class="quantity">0</span>
+					<span class="quantity">
+						{{ collectQuantity ? collectQuantity : 0 }}
+					</span>
 				</view>
-				<view class="foot">
+				<view class="foot" @click="goFootPrint">
 					足迹
-					<span class="quantity">6</span>
+					<span class="quantity">
+						{{ footprintQuantity ? footprintQuantity : 0 }}
+					</span>
 				</view>
 				<view class="data">
 					<button class="mini-btn" size="mini">个人资料</button>
@@ -38,23 +42,39 @@
 	</view>
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { onLoad, onShow } from '@dcloudio/uni-app';
-const userInfo = reactive({
-	uid: 0
-});
+import { ref } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
+const userId = uniCloud.getCurrentUserInfo().uid;
+const collectQuantity = ref<number>();
+const db = uniCloud.database();
+const footprintQuantity = ref<number>();
 onShow(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-});
-onLoad(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-	if (!userInfo.uid) {
-		uni.navigateTo({
-			url:
-				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
+	db.collection('collect')
+		.where(`user_id=='${userId}'`)
+		.get()
+		.then(res => {
+			collectQuantity.value = res.result.data.length;
 		});
-	}
+	db.collection('footprint')
+		.where(`user_id=='${userId}'`)
+		.field('adopt_id,found_id')
+		.orderBy('create_time', 'desc')
+		.distinct()
+		.get()
+		.then(res => {
+			footprintQuantity.value = res.result.data.length;
+		});
 });
+const goCollect = () => {
+	uni.navigateTo({
+		url: '/pages/Mine/PersonalInformation/Collect/index'
+	});
+};
+const goFootPrint = () => {
+	uni.navigateTo({
+		url: '/pages/Mine/PersonalInformation/Footprint/index'
+	});
+};
 </script>
 
 <style lang="less" scoped>

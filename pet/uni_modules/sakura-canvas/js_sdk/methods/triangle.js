@@ -44,11 +44,6 @@ export default class DrawTriangle {
 			x, y, w, h, color, alpha, isFill, lineWidth, drawType, offsetRight,
 			coordinate, rotate, windowAlign, direction, borderWidth, borderColor, drawImage
 		} = this.getDrawParams(params, conversion)
-		if (color === 'black' && drawImage) {
-			color = 'none'
-		} else if(color === 'black') {
-			color = '#ffffff'
-		}
 		if (windowAlign !== 'none' && drawType != 'custom') {
 			x = commonDrawMethods.computedCenterX(canvasWidth, w, windowAlign, offsetRight)
 		}
@@ -117,7 +112,7 @@ export default class DrawTriangle {
 				commonDrawMethods.setStrokeStyle(borderColor)
 				Context.stroke()
 			}
-			if (!drawImage || (drawImage && color !== 'none')) {
+			if (!drawImage) {
 				commonDrawMethods.setFillStyle(color)
 				Context.fill()
 			}
