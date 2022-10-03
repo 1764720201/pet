@@ -10,24 +10,20 @@
 			</view>
 		</div>
 		<view class="daily">
-			<img class="img" :src="image" />
+			<image
+				class="img"
+				src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f46f8a1d-9332-4f0e-9666-910073387c9b/7391b4f0-8641-4de0-ae3e-129895fe4604.jpeg"
+				mode="aspectFill"
+			></image>
+
 			<view class="title">吸猫的日常</view>
 		</view>
 	</view>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-const image = ref();
-const db = uniCloud.database();
-db.collection('images')
-	.where('title=="吸猫的日常"')
-	.get()
-	.then(res => {
-		image.value = res.result.data[0].image[0].path;
-	});
 const goCatDaily = () => {
 	uni.navigateTo({
-		url: `/pages/Home/Daily/CatDaily/index?image=${image.value}`
+		url: `/pages/Home/Daily/CatDaily/index`
 	});
 };
 </script>

@@ -1,39 +1,47 @@
 <template>
-	<Received></Received>
-	<News></News>
-	<uni-file-picker v-model="imageValue" fileMediatype="image" mode="grid" />
-	<view class="" @click="upload">上传</view>
+	<Received :hasLogin="hasLogin" :userId="userId"></Received>
+	<News :hasLogin="hasLogin" :userId="userId"></News>
 </template>
 <script setup lang="ts">
 import Received from './Received/index.vue';
 import News from './News/index.vue';
 import { ref } from 'vue';
-import { reactive } from 'vue';
-import { onLoad, onShow } from '@dcloudio/uni-app';
-const userInfo = reactive({
-	uid: 0
-});
-onShow(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-});
-onLoad(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-	if (userInfo.uid == 0) {
+import { onShow } from '@dcloudio/uni-app';
+const userId = ref<string>();
+const db = uniCloud.database();
+const hasLogin = ref<boolean>(false);
+const checkLogin = async () => {
+	await db
+		.collection('uni-id-users')
+		.where('_id==$cloudEnv_uid')
+		.get({ getOne: true })
+		.then(res => {
+			userId.value = res.result.data._id;
+			hasLogin.value = true;
+		})
+		.catch(() => {
+			hasLogin.value = false;
+		});
+};
+onShow(async () => {
+	db.collection('chat')
+		.where(`to_uid==$cloudEnv_uid&&is_read==false`)
+		.count()
+		.then(res => {
+			if (!res.result.total) {
+				uni.removeTabBarBadge({
+					index: 3
+				});
+			}
+		});
+	await checkLogin();
+	if (!hasLogin.value) {
 		uni.navigateTo({
 			url:
 				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
 		});
 	}
 });
-const imageValue = ref([]);
-const upload = () => {
-	uniCloud.callFunction({
-		name: 'uploadPicture',
-		data: {
-			image: imageValue.value
-		}
-	});
-};
 </script>
 
 <style lang="less" scoped></style>

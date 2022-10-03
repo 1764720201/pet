@@ -8,8 +8,8 @@
 			<view class="author-information">
 				<AuthorInformation
 					:nickname="userInfo.nickname"
-					:avatarUrl="userInfo.imgURL"
-					:userId="userInfo.id"
+					:avatarUrl="userInfo.avatar_file.url"
+					:userId="userInfo._id"
 					:wxCode="petInfo.wx_code"
 					:phone="petInfo.phone"
 					title="送养人信息"
@@ -29,71 +29,42 @@
 						@click="goPetInfo(local)"
 					>
 						<view class="local-info">
-							<img class="local-image" :src="local.img[0].url" />
+							<img
+								class="local-image"
+								:src="local?.img[0]?.url"
+							/>
 							<view class="local-pet-name">
 								{{ local.petName }}
 							</view>
 						</view>
 					</view>
 					<view class="empty-local" v-if="!localList[0]">
-						<img class="empty-image" :src="noLocal" />
+						<image
+							class="empty-image"
+							src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f46f8a1d-9332-4f0e-9666-910073387c9b/09cb7c8f-2752-4fab-9114-8481d05df332.jpeg"
+							mode="aspectFill"
+						></image>
 						还没有同城的宠物
 					</view>
 				</view>
 			</view>
 			<view class="leave-message">
 				<view class="message-title">留言</view>
-				<textarea
-					class="message-input"
-					placeholder="请输入你的留言"
-					maxlength="200"
-					v-model="adoptingComment"
-				></textarea>
-				<view class="message-tips">可输入200字以内</view>
-				<view class="publish-message" @click="commentToAdoption">
-					发表
-				</view>
-			</view>
-			<view class="messages">
-				<view v-for="commentInfo in commentList" :key="commentInfo._id">
-					<view class="messages-body">
-						<view class="messages-userInfo">
-							<img
-								class="messages-userInfo-avatar"
-								:src="commentInfo.avatar_url"
-							/>
-							<view class="messages-userInfo-content">
-								<view class="message-userInfo-content-nickname">
-									{{ commentInfo.nickname }}
-								</view>
-								<view class="messages-userInfo-content-time">
-									<uni-dateformat
-										:date="commentInfo.create_time"
-										format="yyyy-MM-dd hh:mm:ss"
-									></uni-dateformat>
-								</view>
-							</view>
-						</view>
-						<tui-icon
-							name="message"
-							@click="commentToReply(commentInfo)"
-						></tui-icon>
-					</view>
-					<view class="messages-content">
-						{{ commentInfo.comment }}
-					</view>
-					<view class="reply-frame">
-						<view v-for="reply in replyList" :key="reply._id">
-							<view
-								class="reply"
-								v-if="reply.comment_id == commentInfo._id"
-							>
-								{{ reply.nickname }} :{{ reply.comment }}
-							</view>
-						</view>
+				<view class="message-content">
+					<textarea
+						class="message-input uni-input"
+						placeholder="请输入你的留言"
+						maxlength="200"
+						v-model="(adoptingComment as string)"
+						cursor-spacing="180"
+					></textarea>
+					<view class="message-tips">可输入200字以内</view>
+					<view class="publish-message" @click="commentToAdoption">
+						发表
 					</view>
 				</view>
 			</view>
+			<Message :commentList="commentList" :where="where"></Message>
 		</view>
 		<uni-popup ref="alertDialog" type="dialog">
 			<uni-popup-dialog
@@ -103,15 +74,6 @@
 				title="提醒"
 				content="您还未登录,是否要前往登录"
 				@confirm="dialogConfirm"
-			></uni-popup-dialog>
-		</uni-popup>
-		<uni-popup ref="inputDialog" type="dialog">
-			<uni-popup-dialog
-				title="回复"
-				ref="inputClose"
-				mode="input"
-				:placeholder="'@' + replyTo"
-				@confirm="dialogInputConfirm"
 			></uni-popup-dialog>
 		</uni-popup>
 	</view>
@@ -128,6 +90,9 @@ import Inferior from './Inferior/index.vue';
 import Remind from './Remind/index.vue';
 import { onLoad, onShow } from '@dcloudio/uni-app';
 import { reactive, ref } from 'vue';
+import Message from '@/components/Message/index.vue'
+import type {UserInfo } from '@/types/common'
+import {throttle} from '@/common/throttle'
 const userId = ref('');
 onShow(() => {
 	userId.value = uniCloud.getCurrentUserInfo().uid;
@@ -138,15 +103,16 @@ type LocalList = {
 	img: any[];
 	petName: string;
 };
-const localList = ref<LocalList[]>([]);
-const userInfo = reactive({
+const localList=ref<LocalList[]>([])
+const userInfo = reactive<UserInfo>({
 	nickname: '',
-	imgURL: '',
-	id:''
+	avatar_file:{url:''},
+	_id:''
 });
-const commentUserInfo = reactive({
+const commentUserInfo = reactive<UserInfo>({
 	nickname: '',
-	imgURL: ''
+	avatar_file:{url:''},
+	_id:''
 });
 const petInfo = reactive({
 	_id: '',
@@ -175,9 +141,34 @@ const dialogConfirm = () => {
 			'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
 	});
 };
+const where=ref<string>('')
 const alertDialog = ref(null);
-const adoptingComment = ref();
-let valid=ref(true)
+const adoptingComment = ref<string>();
+
+const send:Function=()=>{
+	uniCloud
+		.callFunction({
+			name: 'comment',
+			data: {
+				comment: adoptingComment.value,
+				type: 0,
+				userId: userId.value,
+				adoptId: petInfo._id,
+				avatarUrl: commentUserInfo.avatar_file.url,
+				nickname: commentUserInfo.nickname
+			}
+		})
+		.then(() => {
+			adoptingComment.value=''
+			uni.showToast({
+				title: '评论成功'
+			});
+			getComment()
+		})
+		.catch(err => {
+			console.log(err);
+		});
+}
 const commentToAdoption = () => {
 	userId.value = uniCloud.getCurrentUserInfo().uid;
 	if (!adoptingComment.value) {
@@ -189,151 +180,54 @@ const commentToAdoption = () => {
 		if (!userId.value) {
 			alertDialog.value.open('center');
 		} else {
-			if(!valid.value) return
-			valid.value=false
-			uniCloud
-				.callFunction({
-					name: 'comment',
-					data: {
-						commentContent: adoptingComment.value,
-						commentType: 0,
-						userId: userId.value,
-						adoptId: petInfo._id,
-						avatarUrl: commentUserInfo.imgURL,
-						nickname: commentUserInfo.nickname
-					}
-				})
-				.then(() => {
-					refreshMessage();
-					adoptingComment.value = '';
-					uni.showToast({
-						title: '评论成功'
-					});
-					setTimeout(()=>{
-					    valid.value=true
-					},3000)
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
+			throttle(send(),3000)
 		}
+}
 };
-const inputDialog=ref(null)
-const replyTo=ref<string>()
-const replyCommentId=ref<string>()
-const commentToReply=async( comment:CommentList)=>{
-	replyTo.value=comment.nickname
-	replyCommentId.value=comment._id
-	inputDialog.value.open('center')
-}
-const dialogInputConfirm=(comment:string)=>{
-	userId.value = uniCloud.getCurrentUserInfo().uid;
-	if(!comment){
-		uni.showToast({
-			title: '请输入文字',
-			icon: 'none'
-		});
-	}else{
-		if (!userId.value) {
-			alertDialog.value.open('center');
-		} else{
-			uniCloud.callFunction({
-				name:'comment',
-				data:{
-					commentContent:comment,
-					commentType: 1,
-					userId: userId.value,
-					adoptId: petInfo._id,
-					avatarUrl: commentUserInfo.imgURL,
-					nickname: commentUserInfo.nickname,
-					commentId:replyCommentId.value
-				}
-			}).then(()=>{
-				uni.showToast({
-					title:'评论成功',
-					icon:'none'
-				})
-				refreshReply()
-			})
-		}
-	}
 
-}
 const goPetInfo = (local: LocalList) => {
 	uni.navigateTo({
 		url: `/pages/ApplyAdopt/index?id=${local._id}`
 	});
 };
-const replyList=ref([])
-type CommentList = {
-	adopt_id: string;
-	avatar_url: string;
-	comment: string;
-	comment_type: number;
-	create_time: number;
-	nickname: string;
-	user_id: string;
-	_id: string;
-};
-let commentList = ref<CommentList[]>([]);
-const refreshMessage = () => {
-	const adoption = db
-		.collection('adoption')
-		.where(`_id=='${petInfo._id}'`)
-		.field('_id')
-		.getTemp();
-	const comment = db
-		.collection('comment')
-		.where('comment_type==0')
-		.orderBy('create_time', 'desc')
-		.getTemp();
-	db.collection(adoption, comment)
+const commentList=ref([])
+const getComment=async()=>{
+	await db.collection('comment')
+		.where(`adopt_id=='${petInfo._id}'&&comment_type==0`)
+		.orderBy('create_time','desc')
 		.get()
 		.then(res => {
-			commentList.value = res.result.data[0]._id.comment;
+			commentList.value=res.result.data;
 		});
-};
-const refreshReply=()=>{
-	db.collection('comment')
-	.where('comment_type==1')
-	.get()
-	.then((res)=>{
-		replyList.value=res.result.data
-	})
 }
-const noLocal=ref()
 const applyList=ref([])
+const getUserInfo=async(where:string,option:UserInfo)=>{
+ await	db
+		.collection('uni-id-users')
+		.where(where)
+		.field('nickname,avatar_file,_id')
+		.get({getOne:true})
+		.then(res => {
+			Object.assign(option,res.result.data)
+		});
+}
 onLoad(async option => {
 	userId.value = uniCloud.getCurrentUserInfo().uid;
 	await db
 		.collection('adoption')
 		.where(`_id == '${option.id}'`)
 		.get()
-		.then(res => {
-			Object.assign(petInfo, res.result.data[0]);
+		.then(async res => {
+		    await Object.assign(petInfo, res.result.data[0]);
+			where.value=`comment_type==1&&adopt_id=='${petInfo._id}'`
 		})
 		.then(async () => {
 			reflash();
-			await db
-				.collection('uni-id-users')
-				.where(`_id == '${userId.value}'`)
-				.field('nickname,avatar_file')
-				.get()
-				.then(res => {
-					commentUserInfo.nickname = res.result.data[0].nickname;
-					commentUserInfo.imgURL = res.result.data[0].avatar_file?.url;
-				});
-		}).then(()=>{
-			db.collection('uni-id-users')
-			.where(`_id=='${petInfo.user_id}'`)
-			.get()
-			.then((res)=>{
-				userInfo.imgURL=res.result.data[0].avatar_file?.url
-				userInfo.nickname=res.result.data[0].nickname
-				userInfo.id=res.result.data[0]._id
-			})
-		}).then(()=>{
+			await getUserInfo(`_id == '${userId.value}'`,commentUserInfo)
+		    await getUserInfo(`_id=='${petInfo.user_id}'`,userInfo)
+			getComment()
+		})
+		.then(()=>{
 			db.collection('apply')
 			.where(`adopt_id=='${petInfo._id}'&&state=='申请中'`)
 			.field('user_id')
@@ -341,21 +235,10 @@ onLoad(async option => {
 			.then((res)=>{
 				applyList.value=res.result.data
 			})
-		}).then(()=>{
-			db.collection('images')
-				.where("title=='没有同城'")
-				.get()
-				.then(res => {
-					noLocal.value = res.result.data[0].image[0].url;
-				});
-		})
-		.then(() => {
-			refreshMessage();
-			refreshReply()
 		})
 		.catch(err => {
-			console.log(err.code); // 打印错误码
-			console.log(err.message); // 打印错误内容
+			console.log(err.code);
+			console.log(err.message);
 		});
 });
 
@@ -371,7 +254,7 @@ const reflash = () => {
 			getCount: true
 		})
 		.then(res => {
-			localList.value = res.result.data;
+			localList.value=res.result.data
 			count.value = res.result.count;
 		});
 };
@@ -442,15 +325,16 @@ const change = () => {
 				.empty-local {
 					color: #666;
 					font-size: 40rpx;
-					height: 200rpx;
+					height: 300rpx;
 					width: 100%;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					justify-content: space-between;
 					.empty-image {
-						width: 100rpx;
-						height: 100rpx;
+						border-radius: 50%;
+						width: 200rpx;
+						height: 200rpx;
 					}
 				}
 				.local-info {
@@ -474,76 +358,33 @@ const change = () => {
 			.message-title {
 				font-weight: 900;
 			}
-			.message-input {
+			.message-content {
 				margin-top: 30rpx;
-				padding: 3% 5%;
-				width: 90%;
+				height: 320rpx;
 				border-radius: 20rpx;
 				border: 1px solid #666;
-			}
-			.publish-message {
-				z-index: 20;
-				padding: 15rpx 45rpx;
-				border-radius: 30rpx;
-				color: white;
-				font-size: 25rpx;
-				background-color: rgb(235, 151, 168);
-				position: absolute;
-				right: 50rpx;
-				top: 320rpx;
-			}
-			.message-tips {
-				font-size: 25rpx;
-				color: rgb(152, 150, 152);
-				left: 40rpx;
-				position: absolute;
-				top: 340rpx;
-			}
-		}
-		.messages {
-			padding-bottom: 200rpx;
-			margin-top: 50rpx;
-			width: 83%;
-			margin-left: 12%;
-			.messages-body {
-				margin-top: 50rpx;
-				justify-content: space-between;
-				align-items: center;
-				display: flex;
-				.messages-userInfo {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					&-avatar {
-						width: 100rpx;
-						height: 100rpx;
-						border-radius: 50%;
-					}
-					&-content {
-						margin-left: 30rpx;
-						&-nickname {
-							font-size: 30rpx;
-						}
-						&-time {
-							margin-top: 5rpx;
-							font-size: 23rpx;
-							color: #ccc;
-						}
-					}
+				.message-input {
+					padding: 3% 5%;
+					width: 90%;
+					height: 160rpx;
 				}
-			}
-			.messages-content {
-				width: 420rpx;
-				margin-left: 130rpx;
-				margin-top: 5rpx;
-			}
-			.reply-frame {
-				margin-top: 20rpx;
-				width: 80%;
-				margin-left: 20%;
-				.reply {
-					padding: 20rpx;
-					background-color: rgba(227, 226, 227, 0.5);
+				.publish-message {
+					z-index: 20;
+					padding: 15rpx 45rpx;
+					border-radius: 30rpx;
+					color: white;
+					font-size: 25rpx;
+					background-color: rgb(235, 151, 168);
+					position: absolute;
+					right: 50rpx;
+					top: 320rpx;
+				}
+				.message-tips {
+					font-size: 25rpx;
+					color: rgb(152, 150, 152);
+					left: 40rpx;
+					position: absolute;
+					top: 340rpx;
 				}
 			}
 		}

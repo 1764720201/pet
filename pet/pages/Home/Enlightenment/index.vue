@@ -68,7 +68,11 @@
 				v-for="picture in foundInfo.uploadPicture"
 				:key="picture.fileId"
 			>
-				<img :src="picture.path" class="picture" />
+				<image
+					:src="picture.path"
+					class="picture"
+					mode="widthFix"
+				></image>
 			</view>
 		</view>
 		<view class="comment">
@@ -76,28 +80,9 @@
 				<view class="t-icon t-icon-qianbi"></view>
 				<view class="input-thread">写下你的线索吧!</view>
 			</view>
-			<view class="share">分享</view>
+			<button class="share" open-type="share">分享</button>
 		</view>
-		<view class="comment-list">
-			<view class="comment-title">评论</view>
-			<view
-				class="comment-item"
-				v-for="comment in commentList"
-				:key="comment._id"
-			>
-				<img :src="comment.avatar_url" class="comment-avatar" />
-				<view class="time-name">
-					<view class="comment-name">{{ comment.nickname }}</view>
-					<view class="comment-time">
-						<uni-dateformat
-							:date="comment.create_time"
-							format="yyyy-MM-dd hh:mm:ss"
-						></uni-dateformat>
-					</view>
-					<view class="comment-content">{{ comment.comment }}</view>
-				</view>
-			</view>
-		</view>
+		<Message :commentList="commentList" :where="where"></Message>
 	</view>
 	<uni-popup ref="inputDialog" type="dialog">
 		<uni-popup-dialog
@@ -113,6 +98,7 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { reactive, ref } from 'vue';
+import Message from '@/components/Message/index.vue';
 const db = uniCloud.database();
 const userId = uniCloud.getCurrentUserInfo().uid;
 const inputDialog = ref(null);
@@ -123,8 +109,8 @@ const sendComment = (e: string) => {
 	uniCloud.callFunction({
 		name: 'comment',
 		data: {
-			commentContent: e,
-			commentType: 2,
+			comment: e,
+			type: 0,
 			userId: userId,
 			foundId: foundInfo._id,
 			nickname: commenterInfo.nickname,
@@ -167,6 +153,7 @@ const userInfo = reactive({
 	nickname: '',
 	imgURL: ''
 });
+const where = ref('');
 const callPhone = () => {
 	uni.makePhoneCall({
 		phoneNumber: foundInfo.phone
@@ -187,7 +174,7 @@ const commentList = ref<any>([]);
 const getComment = async () => {
 	await db
 		.collection('comment')
-		.where(`found_id=='${foundInfo._id}'&&comment_type==2`)
+		.where(`found_id=='${foundInfo._id}'&&comment_type==0`)
 		.get()
 		.then(res => {
 			commentList.value = res.result.data;
@@ -202,6 +189,7 @@ onLoad(async option => {
 		.get()
 		.then(res => {
 			Object.assign(foundInfo, res.result.data[0]);
+			where.value = `comment_type==1&&found_id=='${foundInfo._id}'`;
 		})
 		.then(() => {
 			db.collection('uni-id-users')

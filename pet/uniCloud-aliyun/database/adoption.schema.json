@@ -2,7 +2,7 @@
 {
 	"bsonType": "object",
 	"required": ["name", "source", "age", "city", "gender", "img", "medical", "particular", "pet_name", "phone",
-		"punch", "wx_code"
+		"punch", "wx_code", "story"
 	],
 	"permission": {
 		"read": true,

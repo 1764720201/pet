@@ -28,6 +28,8 @@
 						limit="3"
 						file-mediatype="image"
 						v-model="formData.uploadPicture"
+						mode="grid"
+						:imageStyles="imageStyles"
 					></uni-file-picker>
 				</uni-forms-item>
 			</view>
@@ -69,17 +71,10 @@
 					/>
 				</uni-forms-item>
 				<uni-forms-item label="走失城市" name="city">
-					<uni-data-picker
-						placeholder="请选择地址"
-						popup-title="请选择城市"
-						collection="opendb-city-china"
-						field="code as value, name as text"
-						orderby="value asc"
-						:step-searh="true"
-						self-field="code"
-						parent-field="parent_code"
-						@change="changeAddress"
-					></uni-data-picker>
+					<pickerAddress @change="change">
+						{{ formData.city.join('') }}
+					</pickerAddress>
+					<uni-icons type="right" size="20"></uni-icons>
 				</uni-forms-item>
 				<uni-forms-item label="丢了什么" name="star">
 					<uni-data-checkbox
@@ -106,57 +101,123 @@
 			</view>
 		</uni-forms>
 		<view class="confirm-btn">
-			<button class="confirm-issue" @click="confirmIssue">
-				确认发布
-			</button>
+			<Issue issue="确认发布" @click="confirmIssue"></Issue>
 		</view>
 	</view>
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
 import { onLoad, onShow } from '@dcloudio/uni-app';
+import Issue from '@/components/Issue/index.vue';
+import pickerAddress from '@/components/gtc-pickerAddress/pickerAddress.vue';
 const userInfo = reactive({
 	uid: 0
 });
+const imageStyles = reactive({
+	width: 74,
+	height: 74,
+	border: {
+		color: '#afafaf',
+		radio: 10
+	}
+});
+const change = (e: any) => {
+	formData.city = e.data;
+};
 onShow(() => {
 	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
 });
-onLoad(() => {
+const ifIssueFound = ref<boolean>();
+const foundId = ref<string>();
+type Choose = {
+	text: string;
+	value: number;
+};
+const getNewList = (optionList: Choose[]) => {
+	return optionList.map(value => {
+		return value.text;
+	});
+};
+onLoad(option => {
+	if (option.id) {
+		ifIssueFound.value = true;
+		foundId.value = option.id;
+	} else {
+		ifIssueFound.value = false;
+	}
 	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
 	if (!userInfo.uid) {
 		uni.navigateTo({
 			url:
 				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
 		});
+	} else {
+		db.collection('uni-id-users')
+			.where(`_id=='${userInfo.uid}'`)
+			.field('mobile as phone,wxcode as wxCode,city')
+			.get({
+				getOne: true
+			})
+			.then(res => {
+				const data = res.result.data;
+				if (data.city == ['请选择城市']) {
+					data.city == formData.city;
+				}
+				Object.assign(formData, data);
+			});
+		if (ifIssueFound.value) {
+			db.collection('foundPet')
+				.where(`_id=='${foundId.value}'&&user_id=='${userInfo.uid}'`)
+				.get({ getOne: true })
+				.then(res => {
+					const foundDetail = res.result.data;
+					formData.city = foundDetail.city;
+					formData.title = foundDetail.title;
+					formData.introduce = foundDetail.introduce;
+					formData.uploadPicture = foundDetail.uploadPicture;
+					formData.variety = foundDetail.variety;
+					formData.name = foundDetail.name;
+					formData.phone = foundDetail.phone;
+					formData.wxCode = foundDetail.wx_code;
+					formData.reward = foundDetail.reward;
+					formData.typeIndex = newList[0].indexOf(foundDetail.type);
+					formData.starIndex = newList[1].indexOf(foundDetail.star);
+					formData.genderIndex = newList[2].indexOf(
+						foundDetail.gender
+					);
+				});
+		}
 	}
 });
-type Choose = {
-	text: string;
-	value: number;
-};
+
 const formData = reactive({
-	city: [],
+	city: ['浙江省', '宁波市', '宁海县'],
 	name: '',
 	introduce: '',
 	title: '',
 	uploadPicture: [],
 	wxCode: '',
 	phone: '',
-	authorName: '',
 	reward: '',
 	typeIndex: 0,
 	starIndex: 0,
 	genderIndex: 0,
-	variety: '',
-	avatarURL: ''
+	variety: ''
 });
-
 const rules = reactive({
 	title: {
 		rules: [
 			{
 				required: true,
 				errorMessage: '标题不能为空'
+			}
+		]
+	},
+	variety: {
+		rules: [
+			{
+				required: true,
+				errorMessage: '品种不能为空'
 			}
 		]
 	},
@@ -210,24 +271,12 @@ const rules = reactive({
 	}
 });
 const form = ref(null);
-const changeAddress = (e: any) => {
-	formData.city.push(e.detail.value[0].text);
-	formData.city.push(e.detail.value[1].text);
-	formData.city.push(e.detail.value[2].text);
-};
 const db = uniCloud.database();
 const confirmIssue = async () => {
-	await db
-		.collection('uni-id-users')
-		.where(`_id=='${userInfo.uid}'`)
-		.field('avatar_file,nickname')
-		.get()
-		.then(res => {
-			formData.avatarURL = res.result.data[0].avatar_file.url;
-			formData.authorName = res.result.data[0].nickname;
-		})
-		.then(() => {
-			form.value.validate().then(() => {
+	if (!ifIssueFound.value) {
+		form.value
+			.validate()
+			.then(() => {
 				uniCloud.callFunction({
 					name: 'foundPet',
 					data: {
@@ -256,14 +305,44 @@ const confirmIssue = async () => {
 						console.log(err);
 					}
 				});
+			})
+			.then(() => {
+				uni.navigateBack();
+			})
+			.catch(err => {
+				console.log(err);
 			});
-		})
-		.then(() => {
-			uni.navigateBack();
-		})
-		.catch(err => {
-			console.log(err);
+	} else {
+		form.value.validate().then(() => {
+			db.collection('foundPet')
+				.where(`_id=='${foundId.value}'&&user_id=='${userInfo.uid}'`)
+				.update({
+					type: typeList[formData.typeIndex].text,
+					uploadPicture: formData.uploadPicture,
+					name: formData.name,
+					star: starList[formData.starIndex].text,
+					variety: formData.variety,
+					gender: genderList[formData.genderIndex].text,
+					introduce: formData.introduce,
+					title: formData.title,
+					city: formData.city,
+					phone: formData.phone,
+					wx_code: formData.wxCode,
+					reward: formData.reward
+				})
+				.then(() => {
+					uni.showToast({
+						title: '修改成功',
+						icon: 'none',
+						success() {
+							setTimeout(() => {
+								uni.navigateBack();
+							}, 500);
+						}
+					});
+				});
 		});
+	}
 };
 const typeList = reactive<Choose[]>([
 	{
@@ -299,6 +378,9 @@ const genderList = reactive<Choose[]>([
 		value: 1
 	}
 ]);
+const newList = [typeList, starList, genderList].map(value => {
+	return getNewList(value);
+});
 </script>
 <style lang="less" scoped>
 .found-pet {

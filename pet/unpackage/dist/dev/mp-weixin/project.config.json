@@ -6,8 +6,8 @@
     },
     "setting": {
         "urlCheck": false,
-        "es6": false,
-        "postcss": true,
+        "es6": true,
+        "postcss": false,
         "minified": true,
         "newFeature": true,
         "bigPackageSizeSupport": true,
@@ -15,8 +15,7 @@
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
-        },
-        "uglifyFileName": false
+        }
     },
     "compileType": "miniprogram",
     "libVersion": "2.26.0",

@@ -10,7 +10,8 @@ exports.main = async (event, context) => {
 		type: event.type,
 		pet_id: event.petId,
 		found_id: event.foundId,
-		knowledge_id: event.knowledgeId
+		knowledge_id: event.knowledgeId,
+		topic_id: event.topicId
 	})
 	return collect
 	//返回数据给客户端

@@ -6,6 +6,12 @@
 			}
 		},
 		{
+			"path": "pages/Chat/index",
+			"style": {
+				"navigationBarTitleText": "聊天"
+			}
+		},
+		{
 			"path": "pages/Adopt/index",
 			"style": {
 				"navigationBarTitleText": "领养"
@@ -21,6 +27,24 @@
 			"path": "pages/Home/Daily/CatDaily/index",
 			"style": {
 				"navigationBarTitleText": "吸猫的日常"
+			}
+		},
+		{
+			"path": "pages/Home/Daily/Participation/index",
+			"style": {
+				"navigationBarTitleText": "话题的发布"
+			}
+		},
+		{
+			"path": "pages/Home/Daily/MyTopic/index",
+			"style": {
+				"navigationBarTitleText": "我发布的话题"
+			}
+		},
+		{
+			"path": "pages/Home/Daily/CatDaily/TopicDetail/index",
+			"style": {
+				"navigationBarTitleText": "讨论详情"
 			}
 		},
 		{
@@ -175,22 +199,26 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
 			"path": "pages/Issue/FoundPet/index",
 			"style": {
 				"navigationBarTitleText": "发布寻宠"
 			}
-		}, {
+		},
+		{
 			"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
 			"style": {
 				"navigationBarTitleText": "绑定手机号码"
 			}
-		}, {
+		},
+		{
 			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
-		}, {
+		},
+		{
 			"path": "components/city-select/City/index",
 			"style": {
 				"navigationBarTitleText": "选择城市"
@@ -205,10 +233,9 @@
 	// "uniIdRouter": {
 	// 	"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin",
 	// 	"needLogin": [
-	// 		"pages/Issue/Adoption/index",
-	// 		"pages/Issue/FoundPet/index",
-	// 		"pages/Mine/index",
-	// 		"pages/Message/index"
+	// 		"pages/Issue/.*",
+	// 		"pages/Mine/.*",
+	// 		"pages/Message/.*"
 	// 	],
 	// 	"resToLogin": true
 	// },

@@ -1,8 +1,5 @@
 <template>
-	<PersonalInformation
-		:userInfo="userInfo"
-		:collect="collect"
-	></PersonalInformation>
+	<PersonalInformation></PersonalInformation>
 	<Request></Request>
 	<Safe></Safe>
 </template>
@@ -10,27 +7,35 @@
 import PersonalInformation from './PersonalInformation/index.vue';
 import Request from './Request/index.vue';
 import Safe from './Safe/index.vue';
-import { reactive, ref, provide } from 'vue';
-import { onLoad, onShow } from '@dcloudio/uni-app';
-const userInfo = reactive({
-	uid: 0
-});
-onShow(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-});
-provide('userId', userInfo.uid);
+import { ref } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
+const userId = ref<string>();
 const db = uniCloud.database();
+const hasLogin = ref<boolean>(false);
+const checkLogin = async () => {
+	await db
+		.collection('uni-id-users')
+		.where('_id==$cloudEnv_uid')
+		.get({ getOne: true })
+		.then(res => {
+			userId.value = res.result.data._id;
+			hasLogin.value = true;
+		})
+		.catch(() => {
+			hasLogin.value = false;
+		});
+};
 const collect = ref<string[]>([]);
-onLoad(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-	if (!userInfo.uid) {
+onShow(async () => {
+	await checkLogin();
+	if (!hasLogin.value) {
 		uni.navigateTo({
 			url:
 				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
 		});
 	} else {
 		db.collection('collect')
-			.where(`user_id=='${userInfo.uid}'`)
+			.where(`user_id=='${userId.value}'`)
 			.field('_id')
 			.get()
 			.then(res => {

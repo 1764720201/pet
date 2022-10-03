@@ -1,12 +1,12 @@
 // 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
 {
 	"bsonType": "object",
-	"required": ["comment", "user_id"],
+	"required": ["user_id", "comment", "comment_type"],
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null",
-		"update": true,
-		"delete": true
+		"update": "auth.uid != null",
+		"delete": "auth.uid != null"
 	},
 	"properties": {
 		"_id": {
@@ -26,12 +26,9 @@
 				"$env": "now"
 			}
 		},
-		"adopt_id": {
-			"bsonType": "string",
-			"foreignKey": "adoption._id"
-		},
 		"comment_type": {
-			"bsonType": "int"
+			"bsonType": "int",
+			"description": "0表示评论,1表示回复"
 		},
 		"comment": {
 			"bsonType": "string"
@@ -39,6 +36,10 @@
 		"comment_id": {
 			"bsonType": "string",
 			"foreignKey": "comment._id"
+		},
+		"comment_user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id"
 		},
 		"avatar_url": {
 			"bsonType": "string",
@@ -51,6 +52,14 @@
 		"found_id": {
 			"bsonType": "string",
 			"foreignKey": "foundPet._id"
+		},
+		"adopt_id": {
+			"bsonType": "string",
+			"foreignKey": "adoption._id"
+		},
+		"topic_id": {
+			"bsonType": "string",
+			"foreignKey": "topic._id"
 		}
 	}
 }

@@ -1,0 +1,65 @@
+{
+	"passwordSecret": "sudfihkjsajhdgweuyhioenwiewwesd",
+	"tokenSecret": "ewjudiunwdvtefhidsjicbdwo",
+	"tokenExpiresIn": 50,
+	"tokenExpiresThreshold": 10,
+	"passwordErrorLimit": 6,
+	"bindTokenToDevice": false,
+	"passwordErrorRetryTime": 3600,
+	"autoSetInviteCode": false,
+	"forceInviteCode": false,
+	"preferedAppPlatform": "app",
+	"app": {
+		"tokenExpiresIn": 2592,
+		"oauth": {
+			"weixin": {
+				"appid": "wxcafbef5692363c46",
+				"appsecret": "填写来源微信开放平台https://open.weixin.qq.com/创建的应用的appsecret"
+			},
+			"apple": {
+				"bundleId": "苹果开发者后台获取的bundleId"
+			}
+		}
+	},
+	"web": {
+		"oauth": {
+			"weixin-h5": {
+				"appid": "wx32b2580e30ef8555",
+				"appsecret": "e47a45cc27defd8a24e4f699178a77e2"
+			},
+			"weixin-web": {
+				"appid": "wx4dcf96ab6af4c5e8",
+				"appsecret": "5ebd549c3a0a8e4321c55a0edc2a78a6"
+			}
+		}
+	},
+	"mp-weixin": {
+		"oauth": {
+			"weixin": {
+				"appid": "wxcafbef5692363c46",
+				"appsecret": "2d8d707963842033c598711da0433b1a"
+			}
+		}
+	},
+	"mp-alipay": {
+		"oauth": {
+			"alipay": {
+				"appid": "支付宝小程序登录用到的appid、privateKey请参考支付宝小程序的文档进行设置或者获取，https://opendocs.alipay.com/open/291/105971#LDsXr",
+				"privateKey": "支付宝小程序登录用到的appid、privateKey请参考支付宝小程序的文档进行设置或者获取，https://opendocs.alipay.com/open/291/105971#LDsXr"
+			}
+		}
+	},
+	"service": {
+		"sms": {
+			"name": "应用名称，对应短信模版的name",
+			"codeExpiresIn": 300,
+			"smsKey": "短信密钥key，开通短信服务处可以看到",
+			"smsSecret": "短信密钥secret，开通短信服务处可以看到"
+		},
+		"univerify": {
+			"appid": "wxcafbef5692363c46",
+			"apiKey": "7fd9819926c6a56c269e486393691d59",
+			"apiSecret": "0859274e11d45ac02f01e712215309e7"
+		}
+	}
+}

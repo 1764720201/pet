@@ -1,17 +1,1 @@
-"use strict";
-var common_vendor = require("../../common/vendor.js");
-if (!Math) {
-  (Notice + Interest)();
-}
-const Notice = () => "./Notice/index.js";
-const Interest = () => "./Interest/index.js";
-const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
-  __name: "index",
-  setup(__props) {
-    return (_ctx, _cache) => {
-      return {};
-    };
-  }
-});
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/yzc/Desktop/pet/pages/Issue/index.vue"]]);
-wx.createPage(MiniProgramPage);
+"use strict";var e=require("../../common/vendor.js");Math||(n+t)();const n=()=>"./Notice/index.js",t=()=>"./Interest/index.js",s=e.defineComponent({__name:"index",setup(o){return(c,i)=>({})}});var r=e._export_sfc(s,[["__file","C:/Users/yzc/Desktop/pet/pages/Issue/index.vue"]]);wx.createPage(r);

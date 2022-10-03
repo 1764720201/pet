@@ -55,7 +55,8 @@ export default {
 			type: '', //快捷登录方式
 			phone: '', //手机号码
 			focusPhone: false,
-			logo: '/static/logo.jpeg'
+			logo:
+				'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f46f8a1d-9332-4f0e-9666-910073387c9b/24f2313e-bd32-4feb-b647-f39ed409fae1.png'
 		};
 	},
 	computed: {

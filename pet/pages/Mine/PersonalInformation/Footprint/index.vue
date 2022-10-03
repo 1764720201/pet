@@ -10,17 +10,16 @@
 		}"
 		collection="footprint"
 		orderby="create_time desc"
-		field="found_id,adopt_id"
+		field="adopt_id"
 		:getone="false"
 		:where="`user_id=='${userId}'`"
-		:page-size="5"
+		:page-size="10"
 		:distinct="true"
 	>
 		<view v-if="error" class="error">{{ error.message }}</view>
 		<view v-else class="footprint">
 			<view v-for="(footprint, index) in data" :key="index">
 				<unicloud-db
-					v-if="footprint.adopt_id"
 					v-slot:default="{ data }"
 					collection="adoption"
 					field="pet_name,img,variety"
@@ -28,6 +27,7 @@
 					:where="`_id=='${footprint?.adopt_id}'`"
 				>
 					<view
+						v-if="footprint.adopt_id"
 						class="footprint-item"
 						@click="goAdopt(footprint.adopt_id)"
 					>
@@ -36,30 +36,6 @@
 							<view class="pet-info-name">
 								{{ data?.pet_name }}
 							</view>
-							<view class="pet-info-variety">
-								{{ data?.variety }}
-							</view>
-						</view>
-					</view>
-				</unicloud-db>
-				<unicloud-db
-					v-if="footprint.found_id"
-					v-slot:default="{ data }"
-					collection="foundPet"
-					field="title,uploadPicture,variety"
-					:getone="true"
-					:where="`_id=='${footprint?.found_id}'`"
-				>
-					<view
-						class="footprint-item"
-						@click="goFoundPet(footprint.found_id)"
-					>
-						<img
-							:src="data?.uploadPicture[0].path"
-							class="pet-image"
-						/>
-						<view class="pet-info">
-							<view class="pet-info-name">{{ data?.title }}</view>
 							<view class="pet-info-variety">
 								{{ data?.variety }}
 							</view>
@@ -75,17 +51,23 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 const userId = uniCloud.getCurrentUserInfo().uid;
 const goAdopt = (id: string) => {
 	uni.navigateTo({
 		url: `/pages/ApplyAdopt/index?id=${id}`
 	});
 };
-const goFoundPet = (id: string) => {
-	uni.navigateTo({
-		url: `/pages/Home/Enlightenment/index?id=${id}`
+const udb = ref(null);
+onPullDownRefresh(() => {
+	udb.value.loadData(() => {
+		uni.stopPullDownRefresh();
 	});
-};
+});
+onReachBottom(() => {
+	udb.value.loadMore();
+});
 </script>
 
 <style scoped lang="scss">

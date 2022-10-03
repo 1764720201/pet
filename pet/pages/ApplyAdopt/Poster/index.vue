@@ -83,7 +83,8 @@ const posterData = reactive({
 });
 setTimeout(() => {
 	const petData = reactive({
-		image: '/static/images/海报.png',
+		image:
+			'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f46f8a1d-9332-4f0e-9666-910073387c9b/36038397-4ec7-4037-a639-4749ae6cd106.png',
 		petImg: petInfo.value.img[0].url,
 		petName: '我叫' + petInfo.value.pet_name,
 		petAge: '我今年' + petInfo.value.age + '了',
@@ -109,21 +110,20 @@ const drawPoster = async () => {
 			w: width,
 			h: height,
 			color: '#ffffff',
-
 			shadow: {
 				show: false,
 				blur: 30,
 				color: 'rgba(0, 0, 0, .15)'
 			}
 		};
-		// 商品图
 		const backImg = {
 			unit: 'rpx',
 			type: 'image',
 			drawType: 'rect',
 			src: image,
 			h: 1000,
-			w: 600
+			w: 600,
+			mode: 'aspectFill'
 		};
 		const petInfoImg = {
 			unit: 'rpx',
@@ -158,6 +158,7 @@ const drawPoster = async () => {
 		const petCity = {
 			type: 'text',
 			text: city,
+			w: 650,
 			y: 600,
 			x: 50,
 			font: {

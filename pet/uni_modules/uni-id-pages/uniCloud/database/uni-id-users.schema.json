@@ -2,7 +2,8 @@
 	"bsonType": "object",
 	"permission": {
 		"update": "doc._id == auth.uid",
-		"read": true
+		"read": true,
+		"write": "doc._id == auth.uid"
 	},
 	"properties": {
 		"_id": {
@@ -28,10 +29,18 @@
 			"title": "头像地址",
 			"trim": "both"
 		},
+		"label": {
+			"bsonType": "string",
+			"description": "个人标签"
+		},
 		"avatar_file": {
 			"bsonType": "file",
 			"description": "用file类型方便使用uni-file-picker组件",
 			"title": "头像文件"
+		},
+		"wxcode": {
+			"bsonType": "string",
+			"description": "微信号"
 		},
 		"comment": {
 			"bsonType": "string",
@@ -109,10 +118,7 @@
 					"value": 2
 				}
 			],
-			"title": "性别",
-			"permission": {
-				"write": false
-			}
+			"title": "性别"
 		},
 		"invite_time": {
 			"bsonType": "timestamp",
@@ -143,15 +149,16 @@
 				"write": false
 			}
 		},
+		"birthday": {
+			"bsonType": "string",
+			"description": "生日"
+		},
 		"mobile": {
 			"bsonType": "string",
 			"description": "手机号码",
 			"pattern": "^\\+?[0-9-]{3,20}$",
 			"title": "手机号码",
-			"trim": "both",
-			"permission": {
-				"write": false
-			}
+			"trim": "both"
 		},
 		"mobile_confirmed": {
 			"bsonType": "int",
@@ -183,6 +190,15 @@
 			"description": "用户昵称",
 			"title": "昵称",
 			"trim": "both"
+		},
+		"introduction": {
+			"bsonType": "string",
+			"description": "简介"
+		},
+		"city": {
+			"bsonType": "array",
+			"arrayType": "string",
+			"description": "常住地"
 		},
 		"password": {
 			"bsonType": "string",

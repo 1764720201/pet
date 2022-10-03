@@ -2,7 +2,7 @@
 {
 	"bsonType": "object",
 	"required": ["city", "create_time", "introduce", "name", "phone", "title", "uploadPicture",
-		"wx_code", "nickname"
+		"wx_code", "nickname", "variety"
 	],
 	"permission": {
 		"read": true,

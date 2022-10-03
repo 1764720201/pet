@@ -21,7 +21,7 @@
 		},
 		"type": {
 			"bsonType": "int",
-			"description": "0表示领养,1表示寻宠,2表示科普,3表示百科"
+			"description": "0表示领养,1表示寻宠,2表示科普,3表示百科,4表示话题"
 		},
 		"create_time": {
 			"bsonType": "timestamp",
@@ -45,6 +45,10 @@
 		"knowledge_id": {
 			"bsonType": "string",
 			"foreignKey": "petKnowledge._id"
+		},
+		"topic_id": {
+			"bsonType": "string",
+			"foreignKey": "topic._id"
 		}
 	}
 }

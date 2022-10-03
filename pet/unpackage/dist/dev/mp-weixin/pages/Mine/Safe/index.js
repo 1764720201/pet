@@ -1,8 +1,1 @@
-"use strict";
-var common_vendor = require("../../../common/vendor.js");
-const _sfc_main = {};
-function _sfc_render(_ctx, _cache) {
-  return {};
-}
-var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-75af31a3"], ["__file", "C:/Users/yzc/Desktop/pet/pages/Mine/Safe/index.vue"]]);
-wx.createComponent(Component);
+"use strict";var e=require("../../../common/vendor.js");const u=e.defineComponent({__name:"index",setup(r){const t=e.pn.getCurrentUserInfo().uid,i=e.pn.database(),n=e.ref();e.onLoad(()=>{i.collection("uni-id-users").where(`_id=='${t}'`).field("mobile").get({getOne:!0}).then(o=>{n.value=o.result.data.mobile})});const s=()=>{n.value?e.index.showToast({title:"\u4F60\u5DF2\u7ECF\u7ED1\u5B9A\u4E86\u624B\u673A\u53F7!",icon:"none"}):e.index.navigateTo({url:"/uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile"})};return(o,d)=>({a:e.o(s)})}});var a=e._export_sfc(u,[["__scopeId","data-v-75af31a3"],["__file","C:/Users/yzc/Desktop/pet/pages/Mine/Safe/index.vue"]]);wx.createComponent(a);

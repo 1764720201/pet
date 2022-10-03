@@ -9,7 +9,7 @@
 				<view class="name">{{ nickname }}</view>
 				<view class="authentication">
 					<view class="autonym">未实名</view>
-					<view class="designation">爱心人士</view>
+					<view class="designation">{{ label }}</view>
 				</view>
 				<view class="adopt">
 					<view class="waitAdopt">
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<view class="consult">
+			<view class="consult" @click="goChat">
 				<uni-icons type="chat" :size="22" color="white"></uni-icons>
 				在线咨询
 			</view>
@@ -46,6 +46,7 @@ const props = defineProps<{
 	title: string;
 }>();
 const { userId, wxCode, phone, avatarUrl, nickname, title } = toRefs(props);
+const label = ref<string>('暂无');
 const waitAdopt = ref<number>(0);
 const alreadyAdopt = ref<number>(0);
 const callPhone = () => {
@@ -71,23 +72,46 @@ const goUserInfo = () => {
 };
 watch(
 	() => userId.value,
-	newValue => {
-		userId.value = newValue;
+	() => {
 		db.collection('adoption')
 			.where(`user_id=='${userId.value}'`)
 			.field('if_adopt')
 			.get()
 			.then(res => {
-				res.result.data.forEach((value: { if_adopt: Boolean }) => {
+				res.result.data.forEach((value: { if_adopt: boolean }) => {
 					if (value.if_adopt == false) {
 						waitAdopt.value++;
 					} else {
 						alreadyAdopt.value++;
 					}
 				});
+			})
+			.then(() => {
+				db.collection('uni-id-users')
+					.where(`_id=='${userId.value}'`)
+					.field('label')
+					.get({ getOne: true })
+					.then(res => {
+						if (res.result.data.label) {
+							label.value = res.result.data.label;
+						}
+					});
 			});
 	}
 );
+const myId = uniCloud.getCurrentUserInfo().uid;
+const goChat = () => {
+	if (userId.value == myId) {
+		uni.showToast({
+			title: '不能自我咨询',
+			icon: 'none'
+		});
+	} else {
+		uni.navigateTo({
+			url: `/pages/Chat/index?id=${userId.value}`
+		});
+	}
+};
 </script>
 
 <style lang="less" scoped>

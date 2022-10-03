@@ -13,6 +13,8 @@
 						v-model="formData.uploadPicture"
 						limit="3"
 						file-mediatype="image"
+						mode="grid"
+						:imageStyles="imageStyles"
 					></uni-file-picker>
 				</uni-forms-item>
 				<view class="tips">最多上传3张图片</view>
@@ -30,9 +32,8 @@
 			<view class="option-list">
 				<uni-forms-item label="宠物昵称" name="petName">
 					<input
-						style="width: 80%;"
+						style="width: 80%"
 						v-model="formData.petName"
-						maxlength="5"
 						placeholder="请输入宠物的昵称(限5个字内)"
 					/>
 				</uni-forms-item>
@@ -58,12 +59,10 @@
 					></uni-data-checkbox>
 				</uni-forms-item>
 				<uni-forms-item label="年龄" name="age">
-					<uni-data-picker
-						:localdata="ageList"
-						popup-title="请选择年龄"
+					<uni-data-select
 						v-model="formData.age"
-						@change="changeAge"
-					></uni-data-picker>
+						:localdata="ageList"
+					></uni-data-select>
 				</uni-forms-item>
 				<uni-forms-item label="医疗" name="medical">
 					<uni-data-checkbox
@@ -139,17 +138,10 @@
 					/>
 				</uni-forms-item>
 				<uni-forms-item label="所在城市" name="city">
-					<uni-data-picker
-						placeholder="请选择地址"
-						popup-title="请选择城市"
-						collection="opendb-city-china"
-						field="code as value, name as text"
-						orderby="value asc"
-						:step-searh="true"
-						self-field="code"
-						parent-field="parent_code"
-						@change="changeAddress"
-					></uni-data-picker>
+					<pickerAddress @change="change">
+						{{ formData.city.join('') }}
+					</pickerAddress>
+					<uni-icons type="right" size="20"></uni-icons>
 				</uni-forms-item>
 				<uni-forms-item label="手机号" name="phone">
 					<input
@@ -167,43 +159,107 @@
 				</uni-forms-item>
 			</view>
 		</uni-forms>
-		<view class="confirm-btn">
-			<button class="confirm-issue" @click="confirmIssue">
-				确认发布
-			</button>
-		</view>
+		<Issue @click="confirmIssue" issue="确认发布"></Issue>
 	</view>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import { onLoad, onShow } from '@dcloudio/uni-app';
-const userInfo = reactive({
-	uid: 0
-});
+import pickerAddress from '@/components/gtc-pickerAddress/pickerAddress.vue';
+import Issue from '@/components/Issue/index.vue';
+const userId = ref<string>();
 const db = uniCloud.database();
-onShow(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-});
-
-onLoad(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
-	if (!userInfo.uid) {
+const hasLogin = ref<boolean>(false);
+const checkLogin = async () => {
+	await db
+		.collection('uni-id-users')
+		.where('_id==$cloudEnv_uid')
+		.get({ getOne: true })
+		.then(res => {
+			userId.value = res.result.data._id;
+			hasLogin.value = true;
+		})
+		.catch(() => {
+			hasLogin.value = false;
+		});
+};
+onShow(async () => {
+	await checkLogin();
+	if (!hasLogin.value) {
 		uni.navigateTo({
 			url:
 				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
 		});
+	}
+	await db
+		.collection('uni-id-users')
+		.where(`_id=='${userId.value}'`)
+		.field('nickname as name,mobile as phone,wxcode as wxCode,city')
+		.get({ getOne: true })
+		.then(res => {
+			const data = res.result.data;
+			if (data.city[0] == '请选择城市') {
+				data.city == formData.city;
+			}
+			Object.assign(formData, data);
+		});
+});
+const imageStyles = reactive({
+	width: 74,
+	height: 74,
+	border: {
+		color: '#afafaf',
+		radio: 10
+	}
+});
+const change = (e: any) => {
+	formData.city = e.data;
+};
+const ifCompile = ref<boolean>();
+const adoptionId = ref<string>();
+onLoad(option => {
+	if (option.id) {
+		ifCompile.value = true;
+		adoptionId.value = option.id;
 	} else {
-		db.collection('uni-id-users')
-			.where(`_id=='${userInfo.uid}'`)
-			.field('nickname')
-			.get()
+		ifCompile.value = false;
+	}
+
+	if (ifCompile.value) {
+		db.collection('adoption')
+			.where(`_id=='${adoptionId.value}'&&user_id=='${userId.value}'`)
+			.get({ getOne: true })
 			.then(res => {
-				formData.name = res.result.data[0].nickname;
-				console.log(formData.name);
+				const adoptDetail = res.result.data;
+				formData.uploadPicture = adoptDetail.img;
+				formData.video = adoptDetail.video;
+				formData.city = adoptDetail.city;
+				formData.phone = adoptDetail.phone;
+				formData.wxCode = adoptDetail.wx_code;
+				formData.variety = adoptDetail.variety;
+				formData.petName = adoptDetail.pet_name;
+				formData.story = adoptDetail.story;
+				formData.starIndex = newList[5].indexOf(adoptDetail.star);
+				formData.genderIndex = newList[4].indexOf(adoptDetail.gender);
+				formData.punchIndex = newList[0].indexOf(adoptDetail.punch);
+				formData.age = newList[2].indexOf(adoptDetail.age);
+				formData.medical = getNewMutiple(adoptDetail.medical, 1);
+				formData.source = getNewMutiple(adoptDetail.source, 3);
+				formData.request = getNewMutiple(adoptDetail.request, 6);
+				formData.particular = getNewMutiple(adoptDetail.particular, 7);
 			});
 	}
 });
-
+const getNewList = (optionList: ChooseList[]) => {
+	return optionList.map(value => {
+		return value.text;
+	});
+};
+const getNewMutiple = (option: string[], index: number) => {
+	return option.map((value: string) => {
+		return newList[index].indexOf(value);
+	});
+};
 const form = ref(null);
 const rules = reactive({
 	petName: {
@@ -266,11 +322,11 @@ const rules = reactive({
 			}
 		]
 	},
-	stroy: {
+	story: {
 		rules: [
 			{
 				required: true,
-				errorMessage: '领养要求不能为空'
+				errorMessage: '宝贝故事不能为空'
 			},
 			{
 				maxLength: 200,
@@ -319,16 +375,17 @@ type ChooseList = {
 	text: string;
 	value: number;
 };
+
 const formData = reactive({
 	story: '',
 	name: '',
 	variety: '',
 	phone: '',
-	city: [],
+	city: ['浙江省', '宁波市', '宁海县'],
 	petName: '',
 	genderIndex: 0,
 	punchIndex: 0,
-	age: '',
+	age: 0,
 	wxCode: '',
 	uploadPicture: [],
 	medical: [],
@@ -538,69 +595,109 @@ const punchList = reactive<ChooseList[]>([
 		value: 5
 	}
 ]);
-const changeAddress = (e: any) => {
-	formData.city.push(e.detail.value[0].text);
-	formData.city.push(e.detail.value[1].text);
-	formData.city.push(e.detail.value[2].text);
-};
-const changeAge = (e: any) => {
-	formData.age = e.detail.value[0].text;
+const newList = [
+	punchList,
+	medicalList,
+	ageList,
+	sourceList,
+	genderList,
+	starList,
+	requestList,
+	particularList
+].map(value => {
+	return getNewList(value);
+});
+const getData = (option: number[], optionList: ChooseList[]) => {
+	return option.map((index: number) => {
+		return optionList[index].text;
+	});
 };
 const confirmIssue = () => {
-	const medicalArr = formData.medical.map((index: number) => {
-		return medicalList[index].text;
-	});
-	const sourceArr = formData.source.map((index: number) => {
-		return sourceList[index].text;
-	});
-	const particularArr = formData.particular.map((index: number) => {
-		return particularList[index].text;
-	});
-	const requestArr = formData.request.map((index: number) => {
-		return requestList[index].text;
-	});
-	form.value
-		.validate()
-		.then(() => {
-			uniCloud.callFunction({
-				name: 'adoption',
-				data: {
-					user_id: userInfo.uid,
-					imageList: formData.uploadPicture,
-					petName: formData.petName,
+	const medical = getData(formData.medical, medicalList);
+	const source = getData(formData.source, sourceList);
+	const particular = getData(formData.particular, particularList);
+	const request = getData(formData.request, requestList);
+	if (!ifCompile.value) {
+		form.value
+			.validate()
+			.then(() => {
+				uniCloud.callFunction({
+					name: 'adoption',
+					data: {
+						user_id: userId.value,
+						imageList: formData.uploadPicture,
+						petName: formData.petName,
+						star: starList[formData.starIndex].text,
+						variety: formData.variety,
+						gender: genderList[formData.genderIndex].text,
+						age: ageList[formData.age].text,
+						medicalList: medical,
+						source: source,
+						particularList: particular,
+						story: formData.story,
+						requestList: request,
+						punch: punchList[formData.punchIndex].text,
+						name: formData.name,
+						city: formData.city,
+						phone: formData.phone,
+						wx_code: formData.wxCode,
+						video: formData.video,
+						ifAdopt: false
+					},
+					success() {
+						uni.showToast({
+							title: '发布成功'
+						});
+					},
+					fail(err) {
+						console.log(err);
+					}
+				});
+			})
+			.then(() => {
+				uni.navigateBack();
+			})
+			.catch((err: any) => {
+				console.log(err);
+			});
+	} else {
+		form.value.validate().then(() => {
+			db.collection('adoption')
+				.where(`_id=='${adoptionId.value}'&&user_id=='${userId.value}'`)
+				.update({
+					img: formData.uploadPicture,
+					pet_name: formData.petName,
 					star: starList[formData.starIndex].text,
 					variety: formData.variety,
 					gender: genderList[formData.genderIndex].text,
-					age: formData.age,
-					medicalList: medicalArr,
-					source: sourceArr,
-					particularList: particularArr,
+					age: ageList[formData.age].text,
+					medical: medical,
+					source: source,
+					particular: particular,
 					story: formData.story,
-					requestList: requestArr,
+					request: request,
 					punch: punchList[formData.punchIndex].text,
 					name: formData.name,
 					city: formData.city,
 					phone: formData.phone,
-					wx_code: formData.wxCode,
-					video: formData.video,
-					ifAdopt: false
-				},
-				success() {
+					wx_code: formData.wxCode
+				})
+				.then(() => {
 					uni.showToast({
-						title: '发布成功'
+						title: '修改成功',
+						icon: 'none',
+						success() {
+							setTimeout(() => {
+								uni.navigateBack();
+							}, 500);
+						}
 					});
-				},
-				fail(err) {
+				})
+				.catch(err => {
 					console.log(err);
-				}
-			});
-		})
-		.then(() => {
-			uni.navigateBack();
-		})
-		.catch((err: any) => {
-			console.log(err);
+				});
 		});
+	}
 };
 </script>
 <style lang="less" scoped>
@@ -682,23 +779,6 @@ const confirmIssue = () => {
 	}
 }
 
-.confirm-btn {
-	padding-bottom: 280rpx;
-	width: 100%;
-	.confirm-issue {
-		color: white;
-		margin: 30rpx 0 0 5%;
-		height: 80rpx;
-		line-height: 80rpx;
-		width: 90%;
-		background-image: linear-gradient(
-			to right,
-			rgb(223, 154, 171),
-			rgb(238, 120, 137)
-		);
-		border-radius: 40rpx;
-	}
-}
 :deep(.uni-forms-item__content) {
 	display: flex;
 	justify-content: flex-end;
@@ -716,6 +796,10 @@ const confirmIssue = () => {
 }
 :deep(.item-text) {
 	text-align: left;
+}
+:deep(.uni-select) {
+	width: 200rpx;
+	text-align: center;
 }
 :deep(.is-checked) {
 	background-image: linear-gradient(

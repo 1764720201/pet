@@ -1,9 +1,13 @@
 {
   "pages": [
     "pages/Home/index",
+    "pages/Chat/index",
     "pages/Adopt/index",
     "pages/FoundPet/index",
     "pages/Home/Daily/CatDaily/index",
+    "pages/Home/Daily/Participation/index",
+    "pages/Home/Daily/MyTopic/index",
+    "pages/Home/Daily/CatDaily/TopicDetail/index",
     "pages/Issue/index",
     "pages/Home/Knowledge/PopularizationOfScience/index",
     "pages/Home/Knowledge/PopularizationOfScience/Encyclopedia/index",

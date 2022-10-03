@@ -2,7 +2,7 @@
 	<view class="safe">
 		<view class="title">安全</view>
 		<view class="content">
-			<view class="category">
+			<view class="category" @click="bindPhone">
 				<view class="t-icon t-icon-shouji"></view>
 				<view>绑定手机</view>
 			</view>
@@ -21,7 +21,35 @@
 		</view>
 	</view>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app';
+import { ref } from 'vue';
+const userId = uniCloud.getCurrentUserInfo().uid;
+const db = uniCloud.database();
+const mobile = ref<string>();
+onLoad(() => {
+	db.collection(`uni-id-users`)
+		.where(`_id=='${userId}'`)
+		.field('mobile')
+		.get({ getOne: true })
+		.then(res => {
+			mobile.value = res.result.data.mobile;
+		});
+});
+const bindPhone = () => {
+	if (!mobile.value) {
+		uni.navigateTo({
+			url:
+				'/uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile'
+		});
+	} else {
+		uni.showToast({
+			title: '你已经绑定了手机号!',
+			icon: 'none'
+		});
+	}
+};
+</script>
 
 <style lang="less" scoped>
 .safe {

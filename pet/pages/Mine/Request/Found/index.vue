@@ -15,7 +15,7 @@ import Found from '@/components/Tab/Found/index.vue';
 const userId = uniCloud.getCurrentUserInfo().uid;
 const tabValue = reactive(['已发布', '已找回']);
 const tabIndex = ref(0);
-const where = ref();
+const where = ref(`user_id=='${userId}'&&state=='已发布'`);
 const getIndex = (e: number) => {
 	tabIndex.value = e;
 	switch (e) {

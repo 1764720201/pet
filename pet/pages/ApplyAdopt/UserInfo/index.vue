@@ -3,7 +3,10 @@
 	<view class="user-info">
 		<img :src="userInfo.avatarFile.url" class="avatar" />
 		<view class="nickname">{{ userInfo.nickname }}</view>
-		<view class="private">
+		<view class="introduction" v-if="userInfo.introduction">
+			{{ userInfo.introduction }}
+		</view>
+		<view class="private" @click="goChat">
 			<uni-icons type="chat" :size="20" color="white"></uni-icons>
 			<view class="private-letter">私信</view>
 		</view>
@@ -33,7 +36,9 @@ const where = ref();
 const db = uniCloud.database();
 const userInfo = reactive({
 	avatarFile: { url: '' },
-	nickname: ''
+	nickname: '',
+	introduction: '',
+	_id: ''
 });
 const waitAdoptList = ref<number>(0);
 const alreadyAdoptList = ref<number>(0);
@@ -41,7 +46,7 @@ onLoad(option => {
 	where.value = `user_id=='${option.userId}'`;
 	db.collection('uni-id-users')
 		.where(`_id=='${option.userId}'`)
-		.field('avatar_file as avatarFile,nickname')
+		.field('avatar_file as avatarFile,nickname,introduction')
 		.get()
 		.then(res => {
 			Object.assign(userInfo, res.result.data[0]);
@@ -60,6 +65,18 @@ onLoad(option => {
 			});
 		});
 });
+const myId = uniCloud.getCurrentUserInfo().uid;
+const goChat = () => {
+	if (userInfo._id == myId) {
+		uni.showToast({
+			title: '你不能私信自己'
+		});
+	} else {
+		uni.navigateTo({
+			url: `/pages/Chat/index?id=${userInfo._id}`
+		});
+	}
+};
 </script>
 
 <style lang="less" scoped>
@@ -84,6 +101,10 @@ onLoad(option => {
 		width: 175rpx;
 		height: 175rpx;
 		border-radius: 50%;
+	}
+	.introduction {
+		font-size: 23rpx;
+		color: #666;
 	}
 	.private {
 		font-size: 28rpx;

@@ -3,9 +3,8 @@
 		<view class="pet-name">{{ petInfo.pet_name }}</view>
 		<span class="gender">{{ petInfo.gender == '男生' ? '♂' : '♀' }}</span>
 		<view class="share">
-			<tui-icon name="share" :size="30" color="#d78797"></tui-icon>
+			<button class="t-icon t-icon-fenxiang" open-type="share"></button>
 		</view>
-		<Collect></Collect>
 		<view class="collect" @click="collect">
 			<uni-icons
 				type="star"
@@ -48,7 +47,7 @@
 				name="about-fill"
 				:size="15"
 				color="#d78797"
-				style="margin-left: 3rpx;"
+				style="margin-left: 3rpx"
 			></tui-icon>
 		</view>
 	</view>
@@ -85,107 +84,104 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
-import { toRefs, ref,watch,getCurrentInstance } from 'vue';
-import {onShow,onLoad} from '@dcloudio/uni-app'
-import Poster from '../Poster/index.vue';
-const instance=getCurrentInstance()
+import { reactive } from "vue";
+import { toRefs, ref, watch, getCurrentInstance } from "vue";
+import { onShow, onLoad } from "@dcloudio/uni-app";
+import Poster from "../Poster/index.vue";
+const instance = getCurrentInstance();
 
-const userInfo=reactive({
-	uid:''
-})
+const userInfo = reactive({
+  uid: "",
+});
 const alertDialog = ref(null);
 const ifCollect = ref<boolean>();
 const punch = () => {
-	alertDialog.value.open('center');
+  alertDialog.value.open("center");
 };
-instance?.proxy?.$Bus.on('ifCollect2',(res:boolean)=>{
-	ifCollect.value=res
-})
+instance?.proxy?.$Bus.on("ifCollect2", (res: boolean) => {
+  ifCollect.value = res;
+});
 const props = defineProps<{ petInfo: PetInfomation }>();
 const { petInfo } = toRefs(props);
 watch(
-	() => petInfo.value._id,
-	newValue => {
-		petInfo.value._id = newValue;
-		db.collection('collect')
-			.where(`user_id=='${userInfo.uid}'&&adopt_id=='${petInfo.value._id}'`)
-			.get()
-			.then(res => {
-				if (res.result.data[0]?._id) {
-					ifCollect.value = true;
-				} else {
-					ifCollect.value = false;
-				}
-			});
-	}
+  () => petInfo.value._id,
+  () => {
+    db.collection("collect")
+      .where(`user_id=='${userInfo.uid}'&&adopt_id=='${petInfo.value._id}'`)
+      .get()
+      .then((res) => {
+        if (res.result.data[0]?._id) {
+          ifCollect.value = true;
+        } else {
+          ifCollect.value = false;
+        }
+      });
+  }
 );
 type PetInfomation = {
-	_id: string;
-	age: string;
-	city: string[];
-	gender: string;
-	img: [];
-	medical: string[];
-	name: string;
-	particular: string[];
-	pet_name: string;
-	phone: string;
-	punch: string;
-	request: string[];
-	source: string[];
-	story: string;
-	variety: string;
-	wx_code: string;
-	issue_time: number;
-	user_id: string;
+  _id: string;
+  age: string;
+  city: string[];
+  gender: string;
+  img: [];
+  medical: string[];
+  name: string;
+  particular: string[];
+  pet_name: string;
+  phone: string;
+  punch: string;
+  request: string[];
+  source: string[];
+  story: string;
+  variety: string;
+  wx_code: string;
+  issue_time: number;
+  user_id: string;
 };
 onShow(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
+  Object.assign(userInfo, uniCloud.getCurrentUserInfo());
 });
 onLoad(() => {
-	Object.assign(userInfo, uniCloud.getCurrentUserInfo());
+  Object.assign(userInfo, uniCloud.getCurrentUserInfo());
 });
 const db = uniCloud.database();
 const collect = () => {
-	if(!userInfo.uid){
-		uni.navigateTo({
-			url:
-				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
-		});
-	}else{
-		instance?.proxy?.$Bus.emit('ifCollect',!ifCollect.value)
-		if (!ifCollect.value) {
-			uniCloud
-				.callFunction({
-					name: 'collect',
-					data: {
-						userId: userInfo.uid,
-						adoptId: petInfo.value._id,
-						type:0
-					}
-				})
-				.then(() => {
-					ifCollect.value = true;
-					uni.showToast({
-						title: '收藏成功',
-						icon: 'none'
-					});
-				});
-		} else {
-			db.collection('collect')
-				.where(`user_id=='${userInfo.uid}'&&adopt_id=='${petInfo.value._id}'`)
-				.remove()
-				.then(() => {
-					ifCollect.value = false;
-					uni.showToast({
-						title: '取消收藏',
-						icon: 'none'
-					});
-				});
-		}
-	}
-
+  if (!userInfo.uid) {
+    uni.navigateTo({
+      url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin",
+    });
+  } else {
+    instance?.proxy?.$Bus.emit("ifCollect", !ifCollect.value);
+    if (!ifCollect.value) {
+      uniCloud
+        .callFunction({
+          name: "collect",
+          data: {
+            userId: userInfo.uid,
+            adoptId: petInfo.value._id,
+            type: 0,
+          },
+        })
+        .then(() => {
+          ifCollect.value = true;
+          uni.showToast({
+            title: "收藏成功",
+            icon: "none",
+          });
+        });
+    } else {
+      db.collection("collect")
+        .where(`user_id=='${userInfo.uid}'&&adopt_id=='${petInfo.value._id}'`)
+        .remove()
+        .then(() => {
+          ifCollect.value = false;
+          uni.showToast({
+            title: "取消收藏",
+            icon: "none",
+          });
+        });
+    }
+  }
 };
 </script>
 

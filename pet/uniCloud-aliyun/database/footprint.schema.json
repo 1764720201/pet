@@ -25,10 +25,6 @@
 		"adopt_id": {
 			"bsonType": "string",
 			"foreignKey": "adoption._id"
-		},
-		"found_id": {
-			"bsonType": "string",
-			"foreignKey": "foundPet._id"
 		}
 	}
 }

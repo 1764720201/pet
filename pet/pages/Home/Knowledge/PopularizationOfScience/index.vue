@@ -19,17 +19,10 @@
 		<view class="knowledge-title">科普知识</view>
 		<unicloud-db
 			ref="udb"
-			v-slot:default="{
-				data,
-				pagination,
-				loading,
-				error,
-				hasMore
-			}"
+			v-slot:default="{ data, pagination, loading, error, hasMore }"
 			collection="petKnowledge"
 			field="_id,title,image,watch"
 			:getone="false"
-			:where="where"
 			:page-size="5"
 		>
 			<view v-if="error" class="error">{{ error.message }}</view>
@@ -57,7 +50,6 @@
 				</view>
 				<img :src="knowledge.image" class="knowledge-image" />
 			</view>
-
 			<uni-load-more status="loading" v-if="loading" />
 			<uni-load-more status="more" v-if="hasMore && !loading" />
 			<uni-load-more v-else-if="!hasMore && !loading" status="noMore" />
@@ -83,7 +75,7 @@ const goEncyclopedia = () => {
 		url: '/pages/Home/Knowledge/PopularizationOfScience/Encyclopedia/index'
 	});
 };
-const watch = ref<number>();
+const watch = ref<number>(0);
 const goKnowledge = (knowledgeId: string) => {
 	uni.navigateTo({
 		url: `/pages/Home/Knowledge/PopularizationOfScience/Knowledge/index?knowledgeId=${knowledgeId}`,
@@ -101,7 +93,7 @@ const goKnowledge = (knowledgeId: string) => {
 						.collection('petKnowledge')
 						.where(`_id=='${knowledgeId}'`)
 						.update({
-							watch: watch.value + 1
+							watch: watch.value! + 1
 						});
 					udb.value.refresh();
 				});

@@ -11,10 +11,34 @@
 	</view>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app';
-const userId = uniCloud.getCurrentUserInfo().uid;
+import { ref, watch, toRefs } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
+const props = defineProps<{ hasLogin: boolean; userId: string }>();
+const { hasLogin, userId } = toRefs(props);
 const db = uniCloud.database();
+const getQuantity = async () => {
+	const comment = db
+		.collection('comment')
+		.where(`comment_type==0||comment_user_id=='${userId.value}'`)
+		.getTemp();
+	const collect = db
+		.collection('collect')
+		.where('type==0||type==1||type==4')
+		.field('adopt_id,topic_id,found_id,_id,type')
+		.getTemp();
+	getSum(comment, 'comment');
+	await getSum(collect, 'collect');
+};
+watch(
+	() => hasLogin.value,
+	async () => {
+		await getQuantity();
+	}
+);
+onShow(async () => {
+	await getQuantity();
+});
+
 const commentQuantity = ref<number>(0);
 const collectQuantity = ref<number>(0);
 const goMyComment = () => {
@@ -27,70 +51,48 @@ const goMyCollect = () => {
 		url: './MyCollect/index'
 	});
 };
-type Data = {
-	_id: {
-		comment?: string[];
-		collect?: string[];
-	};
-};
-type Res = {
-	result: {
-		data: Data[];
-	};
-};
-const getQuantity = (res: Res, option: string) => {
-	res.result.data.forEach(value => {
-		if (option == 'collect') {
-			value._id.collect.forEach(collect => {
-				if (collect) {
-					collectQuantity.value++;
-				}
-			});
-		} else if (option == 'comment') {
-			value._id.comment.forEach(comment => {
-				if (comment) {
-					commentQuantity.value++;
-				}
-			});
-		}
-	});
-};
-onLoad(async () => {
+const getSum = async (collection: any, option: string) => {
+	collectQuantity.value = 0;
+	commentQuantity.value = 0;
+	const col = option;
 	const adoption = db
 		.collection('adoption')
-		.where(`user_id=='${userId}'`)
-		.field('_id')
+		.where(`user_id=='${userId.value}'`)
 		.getTemp();
 	const foundPet = db
 		.collection('foundPet')
-		.where(`user_id=='${userId}'`)
-		.field('_id')
+		.where(`user_id=='${userId.value}'`)
 		.getTemp();
-	db.collection(adoption, 'comment')
-		.get()
-		.then((res: Res) => {
-			getQuantity(res, 'comment');
+	const topic = db
+		.collection('topic')
+		.where(`user_id=='${userId.value}'`)
+		.getTemp();
+	await db
+		.collection(collection, adoption, foundPet, topic)
+		.field(
+			'size(adopt_id) as adopt,size(topic_id) as topic,size(found_id) as found'
+		)
+		.groupBy('num')
+		.groupField(
+			'sum(adopt) as sumAdopt,sum(found) as sumFound,sum(topic) as sumTopic'
+		)
+		.get({ getOne: true })
+		.then(res => {
+			const arr: number[] = Object.values(res.result.data);
+			if (col == 'collect') {
+				for (let i = 1; i < 4; i++) {
+					collectQuantity.value += arr[i];
+				}
+			} else if (col == 'comment') {
+				for (let i = 1; i < 4; i++) {
+					commentQuantity.value += arr[i];
+				}
+			}
 		})
-		.then(() => {
-			db.collection(foundPet, 'comment')
-				.get()
-				.then((res: Res) => {
-					getQuantity(res, 'comment');
-				});
+		.catch(err => {
+			console.log(err);
 		});
-	db.collection(adoption, 'collect')
-		.get()
-		.then((res: Res) => {
-			getQuantity(res, 'collect');
-		})
-		.then(() => {
-			db.collection(foundPet, 'collect')
-				.get()
-				.then((res: Res) => {
-					getQuantity(res, 'collect');
-				});
-		});
-});
+};
 </script>
 
 <style lang="less" scoped>

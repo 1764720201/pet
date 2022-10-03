@@ -9,11 +9,14 @@
 				error,
 				hasMore
 			}"
+			:where="`comment_type==0||comment_user_id=='${userId}'`"
+			orderby="create_time desc"
+			field="adopt_id,found_id,_id,avatar_url,user_id,nickname,create_time,comment,topic_id"
 			:collection="comment"
 			:getone="false"
-			:page-size="10"
 		>
 			<view v-if="error" class="error">{{ error.message }}</view>
+
 			<view v-else>
 				<view
 					class="comment-list"
@@ -22,7 +25,11 @@
 				>
 					<view
 						class="comment"
-						v-if="comment.adopt_id[0] || comment.found_id[0]"
+						v-if="
+							comment.found_id[0] ||
+								comment.topic_id[0] ||
+								comment.adopt_id[0]
+						"
 					>
 						<view class="comment-item">
 							<img
@@ -41,18 +48,27 @@
 									></uni-dateformat>
 								</view>
 							</view>
-							<img
+							<image
 								v-if="comment.adopt_id[0]"
 								:src="comment.adopt_id[0].img[0].url"
 								class="comment-item-image"
 								@click="goAdopt(comment.adopt_id[0]._id)"
-							/>
-							<img
+								mode="aspectFill"
+							></image>
+							<image
 								v-if="comment.found_id[0]"
 								:src="comment.found_id[0].uploadPicture[0].url"
 								class="comment-item-image"
 								@click="goFound(comment.found_id[0]._id)"
-							/>
+								mode="aspectFill"
+							></image>
+							<image
+								v-if="comment.topic_id[0]"
+								:src="comment.topic_id[0].image[0].url"
+								class="comment-item-image"
+								@click="goTopic(comment.topic_id[0]._id)"
+								mode="aspectFill"
+							></image>
 						</view>
 						<view class="comment-content">
 							{{ comment?.comment }}
@@ -82,6 +98,11 @@ const goFound = (id: string) => {
 		url: `/pages/Home/Enlightenment/index?id=${id}`
 	});
 };
+const goTopic = (id: string) => {
+	uni.navigateTo({
+		url: `/pages/Home/Daily/CatDaily/TopicDetail/index?id=${id}`
+	});
+};
 const goUserInfo = (userId: string) => {
 	uni.navigateTo({
 		url: `/pages/ApplyAdopt/UserInfo/index?userId=${userId}`
@@ -97,27 +118,22 @@ onReachBottom(() => {
 	udb.value.loadMore();
 });
 const comment = reactive([
-	db
-		.collection('comment')
-		.field(
-			'found_id,adopt_id,comment,nickname,avatar_url,create_time,user_id'
-		)
-		.orderBy('create_time', 'desc')
-		.getTemp(),
+	db.collection('comment').getTemp(),
 	db
 		.collection('adoption')
 		.where(`user_id=='${userId}'`)
-		.field('_id,img')
-		.getTemp({
-			getOne: true
-		}),
+		.field('img,user_id,_id')
+		.getTemp(),
 	db
 		.collection('foundPet')
 		.where(`user_id=='${userId}'`)
-		.field('_id,uploadPicture')
-		.getTemp({
-			getOne: true
-		})
+		.field('uploadPicture,user_id,_id')
+		.getTemp(),
+	db
+		.collection('topic')
+		.where(`user_id=='${userId}'`)
+		.field('image,user_id,_id')
+		.getTemp()
 ]);
 </script>
 
