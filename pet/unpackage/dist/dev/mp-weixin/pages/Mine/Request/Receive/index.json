@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我收到的申领",
-  "usingComponents": {
-    "lgd-tab": "../../../../uni_modules/lgd-tab/components/lgd-tab/lgd-tab",
-    "receive": "../../../../components/Tab/Receive/index"
-  }
-}

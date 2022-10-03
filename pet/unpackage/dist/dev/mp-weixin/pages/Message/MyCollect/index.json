@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我收到的点赞/收藏",
-  "usingComponents": {
-    "uni-dateformat": "../../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
-    "unicloud-db": "../../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
-    "uni-load-more": "../../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more"
-  }
-}

@@ -1,1 +1,0 @@
-<lgd-tab wx:if="{{b}}" bindgetIndex="{{a}}" u-i="90e4795e-0" bind:__l="__l" u-p="{{b}}"/><apply wx:if="{{c}}" u-i="90e4795e-1" bind:__l="__l" u-p="{{c}}"></apply>

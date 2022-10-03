@@ -1,1 +1,0 @@
-<view><city-select wx:if="{{c}}" class="r" bindcityClick="{{b}}" u-r="citys" u-i="3a47f437-0" bind:__l="__l" u-p="{{c}}"></city-select></view>

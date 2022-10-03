@@ -1,1 +1,0 @@
-"use strict";var e=require("../../../common/vendor.js");const c={};function n(r,s){return{}}var o=e._export_sfc(c,[["render",n],["__scopeId","data-v-19b4476c"],["__file","C:/Users/yzc/Desktop/pet/pages/Issue/Notice/index.vue"]]);wx.createComponent(o);

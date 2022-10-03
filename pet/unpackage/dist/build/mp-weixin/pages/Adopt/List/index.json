@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "pet-list": "../../../components/PetList/index"
-  }
-}

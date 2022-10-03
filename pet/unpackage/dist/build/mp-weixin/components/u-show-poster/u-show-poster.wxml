@@ -1,1 +1,0 @@
-<u-popup wx:if="{{d}}" class="data-v-ebc6fabc" u-s="{{['d']}}" bindclose="{{c}}" u-i="ebc6fabc-0" bind:__l="__l" u-p="{{d}}"><view class="scroll data-v-ebc6fabc"><image src="{{a}}" class="image data-v-ebc6fabc"/></view><view class="save data-v-ebc6fabc" bindtap="{{b}}">保存到相册</view></u-popup>

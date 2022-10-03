@@ -1,9 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "uni-dateformat": "../../uni_modules/uni-dateformat/components/uni-dateformat/uni-dateformat",
-    "tui-icon": "../../node-modules/thorui-uni/lib/thorui/tui-icon/tui-icon",
-    "uni-popup-dialog": "../../uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog",
-    "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup"
-  }
-}

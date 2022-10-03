@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "领养",
-  "usingComponents": {
-    "search": "./Search/index",
-    "swiper": "./Swiper/index",
-    "notice": "./Notice/index",
-    "list": "./List/index"
-  }
-}

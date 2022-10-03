@@ -1,1 +1,0 @@
-"use strict";var e=require("../../common/vendor.js");Math||(n+i+s+t)();const n=()=>"./Search/index.js",i=()=>"./Swiper/index.js",s=()=>"./Notice/index.js",t=()=>"./List/index.js",r=e.defineComponent({__name:"index",setup:e=>(e,n)=>({})});wx.createPage(r);

@@ -1,1 +1,0 @@
-"use strict";var e=require("../../common/vendor.js");Math||(n+o+s+t+i)();const n=()=>"./Swiper/index.js",o=()=>"./Knowledge/index.js",s=()=>"./WaitAdopt/index.js",t=()=>"./Daily/index.js",i=()=>"./Found/index.js",r=e.defineComponent({__name:"index",setup(d){return(a,_)=>({})}});var c=e._export_sfc(r,[["__file","C:/Users/yzc/Desktop/pet/pages/Home/index.vue"]]);wx.createPage(c);

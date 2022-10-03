@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "usingComponents": {
-    "personal-information": "./PersonalInformation/index",
-    "request": "./Request/index",
-    "safe": "./Safe/index"
-  }
-}

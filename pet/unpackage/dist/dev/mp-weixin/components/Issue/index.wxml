@@ -1,1 +1,0 @@
-<view class="confirm-btn data-v-19370411" bindtap="{{b}}"><button class="confirm-issue data-v-19370411">{{a}}</button></view>

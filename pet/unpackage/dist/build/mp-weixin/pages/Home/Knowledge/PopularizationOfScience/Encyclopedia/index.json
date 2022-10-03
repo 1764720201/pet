@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "宠物百科",
-  "usingComponents": {
-    "encyclopedia": "../../../../../components/Tab/Encyclopedia/index"
-  }
-}

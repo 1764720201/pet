@@ -1,1 +1,0 @@
-<received u-i="0731c91e-0" bind:__l="__l"></received><news u-i="0731c91e-1" bind:__l="__l"></news><uni-file-picker wx:if="{{b}}" u-i="0731c91e-2" bind:__l="__l" bindupdateModelValue="{{a}}" u-p="{{b}}"/><view class="" bindtap="{{c}}">上传</view>

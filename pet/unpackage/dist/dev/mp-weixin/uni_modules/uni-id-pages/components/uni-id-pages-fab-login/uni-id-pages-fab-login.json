@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "uni-id-pages-user-profile": "../uni-id-pages-user-profile/uni-id-pages-user-profile"
-  }
-}

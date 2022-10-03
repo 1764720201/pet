@@ -1,1 +1,0 @@
-<view class="uni-margin-wrap data-v-322178e2"><swiper class="swiper data-v-322178e2" circular indicator-dots><swiper-item wx:for="{{a}}" wx:for-item="swiper" wx:key="b" class="data-v-322178e2"><image src="{{swiper.a}}" class="img data-v-322178e2"/></swiper-item></swiper></view>

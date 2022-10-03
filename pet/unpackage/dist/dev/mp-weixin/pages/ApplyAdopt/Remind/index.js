@@ -1,1 +1,0 @@
-"use strict";var e=require("../../../common/vendor.js");const n={};function r(c,t){return{}}var o=e._export_sfc(n,[["render",r],["__file","C:/Users/yzc/Desktop/pet/pages/ApplyAdopt/Remind/index.vue"]]);wx.createComponent(o);

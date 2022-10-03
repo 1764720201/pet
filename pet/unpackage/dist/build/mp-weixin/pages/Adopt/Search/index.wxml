@@ -1,1 +1,0 @@
-<uni-search-bar wx:if="{{d}}" class="data-v-1962318d" bindconfirm="{{a}}" bindblur="{{b}}" bindcancel="{{c}}" u-i="1962318d-0" bind:__l="__l" u-p="{{d}}"></uni-search-bar>

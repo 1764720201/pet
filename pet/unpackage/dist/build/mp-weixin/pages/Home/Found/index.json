@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "tui-icon": "../../../node-modules/thorui-uni/lib/thorui/tui-icon/tui-icon"
-  }
-}

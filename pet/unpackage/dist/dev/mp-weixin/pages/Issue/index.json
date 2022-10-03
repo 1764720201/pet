@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "发布",
-  "usingComponents": {
-    "notice": "./Notice/index",
-    "interest": "./Interest/index"
-  }
-}
