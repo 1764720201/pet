@@ -1,6 +1,7 @@
 <template>
 	<view class="news">
-		<view v-for="chat in chatListInfo" :key="chat.userId">
+		<uni-load-more status="loading" v-if="ifLoading" />
+		<view v-for="chat in result" :key="chat.userId" v-else>
 			<view class="news-item">
 				<unicloud-db
 					v-slot:default="{ data }"
@@ -39,53 +40,67 @@
 	</view>
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch, toRefs } from 'vue';
 import { onShow } from '@dcloudio/uni-app';
+import { reactive, watch, toRefs, ref } from 'vue';
 const props = defineProps<{ hasLogin: boolean; userId: string }>();
 const { hasLogin, userId } = toRefs(props);
+const ifLoading = ref<boolean>(true);
+
 watch(
 	() => hasLogin.value,
-	() => {
-		getChat();
+	async () => {
+		await getChat();
 	}
 );
 const db = uniCloud.database();
-const chatList = ref<string[]>([]);
 type ChatListInfo = {
 	userId: string;
 	unread: number;
 };
 const chatListInfo = reactive<ChatListInfo[]>([]);
+const result = reactive<ChatListInfo[]>([]);
 const getChat = async () => {
+	result.length = 0;
 	await db
 		.collection('chat')
 		.where(`from_uid=='${userId.value}'||to_uid=='${userId.value}'`)
 		.groupBy('from_uid,to_uid')
+		.orderBy('create_date', 'desc')
 		.get()
 		.then(res => {
-			const set: Set<string> = new Set(
-				...res.result.data.map(
-					(value: { to_uid: string; from_uid: string }) => {
-						return Object.values(value).filter(
-							value => value != userId.value
-						);
-					}
-				)
-			);
-			chatList.value = Array.from(set);
+			const arr = [];
+			const newArr = arr.concat(res.result.data);
+			for (let i = 0; i < newArr.length; i++) {
+				if (newArr[i].from_id) {
+					chatListInfo.push({
+						userId: newArr[i].from_uid,
+						unread: 0
+					});
+				} else {
+					chatListInfo.push({ userId: newArr[i].to_uid, unread: 0 });
+				}
+			}
+			let obj = {};
+			for (let i of chatListInfo) {
+				if (!obj[i.userId] && i.userId !== userId.value) {
+					result.push(i);
+					obj[i.userId] = 1;
+				}
+			}
 		});
-	chatList.value.forEach(value => {
+	getChatTotal();
+};
+const getChatTotal = () => {
+	result.forEach(item => {
 		db.collection('chat')
 			.where(
-				`from_uid=='${value}'&&to_uid==$cloudEnv_uid&&is_read==false`
+				`from_uid=='${
+					item.userId
+				}'&&to_uid==$cloudEnv_uid&&is_read==false`
 			)
 			.count()
 			.then(res => {
-				chatListInfo.length = 0;
-				chatListInfo.push({
-					userId: value,
-					unread: res.result.total
-				});
+				item.unread = res.result.total;
 			});
 	});
 };
@@ -94,8 +109,10 @@ const goChat = (id: string) => {
 		url: `/pages/Chat/index?id=${id}`
 	});
 };
-onShow(() => {
-	getChat();
+onShow(async () => {
+	ifLoading.value = true;
+	await getChat();
+	ifLoading.value = false;
 });
 uni.onPushMessage(() => {
 	getChat();

@@ -1,0 +1,22 @@
+.encylopedia.data-v-ea30d0b0 {
+  width: 100%;
+  display: flex;
+}
+.encylopedia .tabs.data-v-ea30d0b0 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  text-align: center;
+  width: 200rpx;
+  border-right: 1px solid #ccc;
+}
+.encylopedia .tabs .category.data-v-ea30d0b0 {
+  line-height: 100rpx;
+  height: 100rpx;
+}
+.encylopedia .tabs .active.data-v-ea30d0b0 {
+  font-size: 45rpx;
+  color: white;
+  background-color: #ed7487;
+}

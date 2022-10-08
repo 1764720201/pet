@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-show-poster": "../../../components/u-show-poster/u-show-poster"
+  }
+}

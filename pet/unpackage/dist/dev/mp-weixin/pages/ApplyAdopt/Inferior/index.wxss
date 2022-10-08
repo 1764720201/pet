@@ -1,0 +1,33 @@
+.inferior {
+  bottom: 0;
+  z-index: 9999;
+  margin-top: 300rpx;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.3);
+  background-color: rgba(236, 235, 236);
+  padding: 30rpx 0;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.inferior .message,
+.inferior .collect {
+  align-items: center;
+  font-size: 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+.inferior .online-consult,
+.inferior .apply-for {
+  padding: 15rpx 30rpx;
+  border-radius: 40rpx;
+  color: white;
+}
+.inferior .online-consult {
+  background-color: #eba00c;
+}
+.inferior .apply-for {
+  background-image: linear-gradient(to right, #eb98bf, #ef559c);
+}

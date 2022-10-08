@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的足迹",
+  "usingComponents": {
+    "unicloud-db": "../../../../node-modules/@dcloudio/uni-components/lib/unicloud-db/unicloud-db",
+    "uni-load-more": "../../../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more"
+  }
+}

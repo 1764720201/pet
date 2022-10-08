@@ -1,0 +1,80 @@
+.knowledge.data-v-0a8805bd {
+  margin-top: 50rpx;
+  margin-left: 5%;
+  width: 90%;
+}
+.knowledge-title.data-v-0a8805bd {
+  font-weight: 900;
+  font-size: 35rpx;
+}
+.knowledge-item.data-v-0a8805bd {
+  padding-bottom: 40rpx;
+  border-bottom: 1px solid #ccc;
+  margin-top: 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.knowledge-item .knowledge-image.data-v-0a8805bd {
+  width: 200rpx;
+  height: 150rpx;
+}
+.knowledge-item .knowledge-main.data-v-0a8805bd {
+  width: 70%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+.knowledge-item .knowledge-main .knowledge-watch.data-v-0a8805bd {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 23rpx;
+}
+.knowledge-item .knowledge-main .knowledge-watch .watch-quantity.data-v-0a8805bd {
+  margin-left: 10rpx;
+}
+.popularzation-of-science.data-v-0a8805bd {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-around;
+}
+.popularzation-of-science .recognition.data-v-0a8805bd,
+.popularzation-of-science .encyclopedia.data-v-0a8805bd {
+  padding-left: 40rpx;
+  padding-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  width: 300rpx;
+  height: 220rpx;
+  border-radius: 20rpx;
+}
+.popularzation-of-science .recognition .recognition-icon.data-v-0a8805bd,
+.popularzation-of-science .encyclopedia .recognition-icon.data-v-0a8805bd,
+.popularzation-of-science .recognition .encyclopedia-icon.data-v-0a8805bd,
+.popularzation-of-science .encyclopedia .encyclopedia-icon.data-v-0a8805bd {
+  display: flex;
+  margin-bottom: 10rpx;
+  justify-content: center;
+  align-items: center;
+  height: 90rpx;
+  width: 90rpx;
+  border-radius: 20rpx;
+}
+.popularzation-of-science .recognition .tips.data-v-0a8805bd,
+.popularzation-of-science .encyclopedia .tips.data-v-0a8805bd {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+  color: #666;
+}
+.popularzation-of-science .recognition.data-v-0a8805bd {
+  background-color: rgba(229, 115, 80, 0.1);
+}
+.popularzation-of-science .recognition-icon.data-v-0a8805bd {
+  background-color: #e87b5e;
+}
+.popularzation-of-science .encyclopedia.data-v-0a8805bd {
+  background-color: rgba(236, 155, 65, 0.1);
+}
+.popularzation-of-science .encyclopedia-icon.data-v-0a8805bd {
+  background-image: linear-gradient(to right, #e6b53f, #e4a247);
+}

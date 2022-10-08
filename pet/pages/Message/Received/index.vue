@@ -27,7 +27,7 @@ const getQuantity = async () => {
 		.field('adopt_id,topic_id,found_id,_id,type')
 		.getTemp();
 	getSum(comment, 'comment');
-	await getSum(collect, 'collect');
+	getSum(collect, 'collect');
 };
 watch(
 	() => hasLogin.value,

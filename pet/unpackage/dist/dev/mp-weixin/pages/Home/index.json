@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "首页",
+  "usingComponents": {
+    "swiper": "./Swiper/index",
+    "knowledge": "./Knowledge/index",
+    "wait-adopt": "./WaitAdopt/index",
+    "daily": "./Daily/index",
+    "found": "./Found/index"
+  }
+}

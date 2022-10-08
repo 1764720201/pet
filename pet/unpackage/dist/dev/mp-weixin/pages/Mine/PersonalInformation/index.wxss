@@ -1,0 +1,72 @@
+.personal-information.data-v-1751d24c {
+  width: 100%;
+  display: flex;
+  margin-left: -20rpx;
+  margin-top: 100rpx;
+  justify-content: space-around;
+}
+.personal-information .avatar .img.data-v-1751d24c {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+}
+.personal-information .name.data-v-1751d24c {
+  font-size: 40rpx;
+  font-weight: 900;
+}
+.personal-information .signation.data-v-1751d24c {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.personal-information .signation .mini-btn.data-v-1751d24c {
+  background-image: linear-gradient(to right, #eda3b5, #eda3b3);
+  padding: 0 20rpx;
+  line-height: 50rpx;
+  height: 50rpx;
+  color: white;
+  font-size: 20rpx;
+}
+.personal-information .signation .authentication.data-v-1751d24c {
+  width: 130rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  border: 1rpx solid black;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  margin-left: 20rpx;
+  text-align: center;
+  font-weight: 700;
+}
+.footer.data-v-1751d24c {
+  margin-top: 50rpx;
+  display: flex;
+  justify-content: space-around;
+}
+.footer .collect.data-v-1751d24c,
+.footer .foot.data-v-1751d24c {
+  font-size: 25rpx;
+  color: #5b5959;
+}
+.footer .collect .quantity.data-v-1751d24c,
+.footer .foot .quantity.data-v-1751d24c {
+  font-size: 38rpx;
+  color: black;
+  font-weight: 900;
+  margin-left: 10rpx;
+}
+.footer .data.data-v-1751d24c {
+  width: 35%;
+}
+.footer .data .mini-btn.data-v-1751d24c {
+  height: 70rpx;
+  width: 150rpx;
+  margin-left: 80rpx;
+  line-height: 70rpx;
+  border-radius: 35rpx;
+  font-size: 22rpx;
+  font-weight: 400;
+  color: white;
+  background-image: linear-gradient(to right, #e7acba, #e67f90);
+}

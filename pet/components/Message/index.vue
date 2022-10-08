@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { toRefs, ref, reactive, watch } from "vue";
-import { onLoad } from "@dcloudio/uni-app";
+import { onLoad,onShow } from "@dcloudio/uni-app";
 import type { UserInfo } from "@/types/common";
 type CommentList = {
   adopt_id: string;
@@ -92,8 +92,26 @@ watch(
       getReply();
     }
   );
+  const userId = ref<string>();
+  const db = uniCloud.database();
+  const hasLogin = ref<boolean>(false);
+  const checkLogin = async () => {
+  	await db
+  		.collection('uni-id-users')
+  		.where('_id==$cloudEnv_uid')
+  		.get({ getOne: true })
+  		.then(res => {
+  			userId.value = res.result.data._id;
+  			hasLogin.value = true;
+  		})
+  		.catch(() => {
+  			hasLogin.value = false;
+  		});
+  };
+  onShow(async () => {
+  	await checkLogin();
+  });
 const inputDialog = ref(null);
-const userId = uniCloud.getCurrentUserInfo().uid;
 const commentInfo = reactive({
   commentId: "",
   commentUserId: "",
@@ -118,7 +136,6 @@ const reply = (
   commentInfo.topicId = topicId;
   inputDialog.value?.open("center");
 };
-const db = uniCloud.database();
 const userInfo = reactive<UserInfo>({
   avatar_file: { url: "" },
   nickname: "",
@@ -145,7 +162,7 @@ const getReply = async () => {
 onLoad(async () => {
   await db
     .collection("uni-id-users")
-    .where(`_id=='${userId}'`)
+    .where(`_id=='${userId.value}'`)
     .field("nickname,avatar_file")
     .get({ getOne: true })
     .then((res) => {
@@ -157,31 +174,39 @@ onLoad(async () => {
 
 });
 const dialogInputConfirm = (e: string) => {
-  uniCloud.callFunction({
-    name: "comment",
-    data: {
-      comment: e,
-      type: 1,
-      userId: userId,
-      adoptId: commentInfo.adoptId,
-      nickname: userInfo.nickname,
-      avatarUrl: userInfo.avatar_file.url,
-      commentId: commentInfo.commentId,
-      commentUserId: commentInfo.commentUserId,
-      foundId: commentInfo.foundId,
-      topicId: commentInfo.topicId,
-    },
-    success() {
-      getReply();
-      uni.showToast({
-        title: "回复成功",
-        icon: "none",
-      });
-    },
-    fail(err) {
-      console.log(err);
-    },
-  });
+	if(!hasLogin.value){
+		uni.navigateTo({
+			url:
+				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin'
+		});
+	}else{
+		uniCloud.callFunction({
+		  name: "comment",
+		  data: {
+		    comment: e,
+		    type: 1,
+		    userId: userId.value,
+		    adoptId: commentInfo.adoptId,
+		    nickname: userInfo.nickname,
+		    avatarUrl: userInfo.avatar_file.url,
+		    commentId: commentInfo.commentId,
+		    commentUserId: commentInfo.commentUserId,
+		    foundId: commentInfo.foundId,
+		    topicId: commentInfo.topicId,
+		  },
+		  success() {
+		    getReply();
+		    uni.showToast({
+		      title: "回复成功",
+		      icon: "none",
+		    });
+		  },
+		  fail(err) {
+		    console.log(err);
+		  },
+		});
+	}
+
 };
 </script>
 

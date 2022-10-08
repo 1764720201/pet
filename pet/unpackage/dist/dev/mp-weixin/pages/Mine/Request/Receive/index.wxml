@@ -1,0 +1,1 @@
+<lgd-tab wx:if="{{b}}" bindgetIndex="{{a}}" u-i="e52842b6-0" bind:__l="__l" u-p="{{b}}"/><receive wx:if="{{c}}" u-i="e52842b6-1" bind:__l="__l" u-p="{{c}}"></receive>

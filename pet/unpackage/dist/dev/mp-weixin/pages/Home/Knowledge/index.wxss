@@ -1,0 +1,50 @@
+.swiper.data-v-6d33d24a {
+  font-size: 30rpx;
+  line-height: 50rpx;
+  width: 700rpx;
+  height: 50rpx;
+}
+.swiper-item.data-v-6d33d24a {
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+}
+.today-knowledge.data-v-6d33d24a {
+  display: flex;
+  padding: 40rpx;
+  font-size: 25rpx;
+}
+.today-knowledge .today.data-v-6d33d24a {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  font-weight: 900;
+}
+.today-knowledge .knowledge.data-v-6d33d24a {
+  margin-left: 10rpx;
+  background-color: #ed7688;
+  color: white;
+  padding: 5rpx;
+  width: 80rpx;
+  text-align: center;
+  height: 35rpx;
+  line-height: 35rpx;
+  font-weight: 900;
+  transform: skewX(-5deg);
+}
+.today-knowledge .knowledge .knowledge-word.data-v-6d33d24a {
+  transform: skewX(5deg);
+}
+.options.data-v-6d33d24a {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.options .option.data-v-6d33d24a {
+  height: 65px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  font-size: 13px;
+  text-align: center;
+}

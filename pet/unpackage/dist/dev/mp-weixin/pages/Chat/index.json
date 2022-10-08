@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "聊天",
+  "usingComponents": {
+    "uni-file-picker": "../../uni_modules/uni-file-picker/components/uni-file-picker/uni-file-picker",
+    "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="data-v-6bcc9849" bindtap="{{f}}" style="{{'width:' + g + ';' + ('height:' + h)}}"><image wx:if="{{a}}" style="{{'width:' + b + ';' + ('height:' + c)}}" class="image data-v-6bcc9849" src="{{d}}" mode="{{e}}"></image></view>

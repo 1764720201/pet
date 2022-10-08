@@ -1,0 +1,1 @@
+<received wx:if="{{a}}" u-i="3bf052c2-0" bind:__l="__l" u-p="{{a}}"></received><news wx:if="{{b}}" u-i="3bf052c2-1" bind:__l="__l" u-p="{{b}}"></news>

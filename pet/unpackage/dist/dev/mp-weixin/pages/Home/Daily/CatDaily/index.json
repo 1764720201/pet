@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "吸猫的日常",
+  "usingComponents": {
+    "lgd-tab": "../../../../uni_modules/lgd-tab/components/lgd-tab/lgd-tab",
+    "cat-daily": "../../../../components/Tab/CatDaily/index"
+  }
+}

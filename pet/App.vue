@@ -20,6 +20,14 @@ const getUnread = () => {
 uni.onPushMessage(() => {
 	getUnread();
 });
+const uniIdCo = uniCloud.importObject('uni-id-co');
+uni.getPushClientId({
+	async success(e) {
+		await uniIdCo.setPushCid({
+			pushClientId: e.cid
+		});
+	}
+});
 onLaunch(async () => {
 	console.log('App Launch');
 	await uniIdPageInit();

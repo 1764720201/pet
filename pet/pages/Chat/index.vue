@@ -100,7 +100,7 @@ const db = uniCloud.database();
 const scrollToView = ref();
 const scrollHeight = ref(`calc(100vh - 300rpx)`);
 const oppositeUid = ref<string>("");
-const uniIdCo = uniCloud.importObject("uni-id-co");
+
 const chatList = ref<any>([]);
 const content = ref<string>("");
 const ifTopioneer = ref<boolean>(false);
@@ -113,14 +113,6 @@ const scroll=async(e)=>{
 		ifFresh.value=true
 	}
 }
-uni.getPushClientId({
-  async success(e) {
-    await uniIdCo.setPushCid({
-      pushClientId: e.cid,
-    });
-  },
-});
-
 const opposite = reactive<UserInfo>({
   avatar_file: { url: "" },
   nickname: "",
@@ -160,10 +152,11 @@ const emptyUnread=async()=>{
 	  .where(`from_uid=='${oppositeUid.value}'&&to_uid==$cloudEnv_uid&&is_read==false`)
 	  .update({
 	    is_read: true,
+	  }).catch(err=>{
+		  console.log(err)
 	  })
 }
 const pioneerChat = ref<string>();
-
 const getChatList = async () => {
   await db
     .collection("chat")

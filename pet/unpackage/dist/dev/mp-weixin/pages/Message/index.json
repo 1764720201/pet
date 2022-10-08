@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "消息",
+  "usingComponents": {
+    "received": "./Received/index",
+    "news": "./News/index"
+  }
+}

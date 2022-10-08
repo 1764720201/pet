@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "个人资料",
+  "usingComponents": {
+    "picker-address": "../../../../components/gtc-pickerAddress/pickerAddress",
+    "issue": "../../../../components/Issue/index",
+    "uni-id-pages-avatar": "../../components/uni-id-pages-avatar/uni-id-pages-avatar",
+    "uni-data-checkbox": "../../../uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox",
+    "uni-id-pages-bind-mobile": "../../components/uni-id-pages-bind-mobile/uni-id-pages-bind-mobile"
+  }
+}
